@@ -7,6 +7,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 
 
 @Entity
@@ -15,12 +16,15 @@ public class TrashComplaint {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private String description;
 	private LocalDate requestDate;
 	private LocalDate exeDate;
 	
+	@ManyToOne
 	private User user;
+	
+	@ManyToOne
 	private Sector sector;
 	
 

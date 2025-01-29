@@ -7,6 +7,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToOne;
 
 
 @Entity
@@ -14,15 +16,19 @@ public class Events {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private String name;
 	private String description;
 	private LocalDate date;
 	private LocalTime time;
 	
+	@ManyToOne
 	private User user;
+	
+	@ManyToOne
 	private Sector sector;
 	
+	@OneToOne
 	private Permit permit;
 	
 

@@ -14,7 +14,7 @@ public class Recipt {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private int id;
+	private Long id;
 	private LocalDate date;
 	
 
