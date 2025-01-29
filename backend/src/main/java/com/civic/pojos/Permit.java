@@ -1,18 +1,13 @@
 package com.civic.pojos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
-public class Permit {
+public class Permit extends BaseEntity{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private String status;
+	@Enumerated
+	@Column(name = "permit_status")
+	private PermitStatus status;
 	
 	@OneToOne
 	private Recipt recipt;

@@ -1,20 +1,17 @@
 package com.civic.pojos;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.*;
 
 @Entity
-public class User {
+public class User extends BaseEntity{
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	private String name;
 	private String email;
 	private String password;
+	@Enumerated
+	private UserRoles role;
+	@Transient
+	private String confirmPassword;
 	
 	@OneToOne
 	private Address address;

@@ -2,20 +2,16 @@ package com.civic.pojos;
 
 import java.time.LocalDate;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 
 
 @Entity
-public class Recipt {
+public class Recipt extends BaseEntity {
 	
+	@Temporal(TemporalType.DATE)
+	@Column(name = "receipt_date")
+	private LocalDate reciptDate;
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
-	private LocalDate date;
 	
 
 }

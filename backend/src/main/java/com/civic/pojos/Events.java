@@ -9,17 +9,18 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 
 @Entity
-public class Events {
+public class Events extends BaseEntity {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	private String name;
 	private String description;
+	@Temporal(TemporalType.DATE)
 	private LocalDate date;
+	@Temporal(TemporalType.TIME)
 	private LocalTime time;
 	
 	@ManyToOne

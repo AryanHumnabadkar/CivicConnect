@@ -8,18 +8,19 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.Temporal;
+import jakarta.persistence.TemporalType;
 
 
 @Entity
-public class TrashComplaint {
+public class TrashComplaint extends BaseEntity{
 	
-
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
 	private String description;
+	
+	@Temporal(TemporalType.DATE)
 	private LocalDate requestDate;
-	private LocalDate exeDate;
+	@Temporal(TemporalType.DATE)
+	private LocalDate serviceDate;
 	
 	@ManyToOne
 	private User user;
