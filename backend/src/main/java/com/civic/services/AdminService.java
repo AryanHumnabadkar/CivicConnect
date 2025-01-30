@@ -1,5 +1,5 @@
 package com.civic.services;
 
-public class UserService {
+public interface AdminService {
 
 }
