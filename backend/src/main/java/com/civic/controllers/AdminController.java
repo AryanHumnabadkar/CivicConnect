@@ -1,5 +1,5 @@
 package com.civic.controllers;
 
-public class UserController {
+public class AdminController {
 
 }
