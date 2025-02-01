@@ -6,7 +6,8 @@ import com.civic.pojos.User;
 
 public interface CitizenService {
 	//
-	String updateSelf(User userDetails); //also need to send token 
+	User getProfileDetails(long userId);
+	String updateProfile(User userDetails); //
 	String deleteProfile(long userId);
 	
 }

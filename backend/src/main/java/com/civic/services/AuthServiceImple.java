@@ -18,6 +18,8 @@ public class AuthServiceImple implements AuthService {
 	@Override
 	public String registerUser(User userDetails) {
 		System.out.println(userDetails);
+		//validations: 1.if email already exists
+		//2. encode password
 		User createdUser = userDao.save(userDetails);
 		return createdUser.getName();
 	}
@@ -25,15 +27,17 @@ public class AuthServiceImple implements AuthService {
 	@Override
 	public User login(String email, String password) {
 		System.out.println(email + " " + password);
+		//find by email first
+		//and check if passwords match
 		User createdUser = userDao.getUserByEmailAndPassword(email, password);
 		return createdUser;
 	}
 
 	@Override
 	public String logout(long id) {
-		// TODO Auto-generated method stub
+		//invalidate token later. 
 		System.out.println(id);
-		return "loggedout";
+		return "Logged out successfully";
 	}
 
 }

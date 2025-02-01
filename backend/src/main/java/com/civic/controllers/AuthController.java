@@ -23,20 +23,20 @@ public class AuthController {
 	//apis
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> registerUser(@RequestBody User user){
-		String isUserCreated = authService.registerUser(user);
+	public ResponseEntity<?> registerUser(@RequestBody User user){  //here RegisterUserDTO
+		String isUserCreated = authService.registerUser(user); //pass UserDTO only
 		return ResponseEntity.ok(isUserCreated);
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody User loginData){
-		User loggedUser = authService.login(loginData.getEmail(), loginData.getPassword());
-		return ResponseEntity.ok(loggedUser);
+	public ResponseEntity<?> login(@RequestBody User loginData){	//here LoginRequest DTO
+		User loggedUser = authService.login(loginData.getEmail(), loginData.getPassword()); //pass email and pass from LoginRequest to service layer and there verification
+		return ResponseEntity.ok(loggedUser);	//ret jwt token here
 	}
 	
 	@PostMapping("/logout/{userId}")
-	public ResponseEntity<?> logout(@PathVariable Long userId){
-		String logoutmsg = authService.logout(userId);
+	public ResponseEntity<?> logout(@PathVariable Long userId){  
+		String logoutmsg = authService.logout(userId); //get token here, verify in service
 		return ResponseEntity.ok(logoutmsg);
 	}
 		
