@@ -1,5 +1,12 @@
 package com.civic.controllers;
 
-public class AdminController {
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
+@RestController
+@RequestMapping("/api/auth")
+public class AdminController {
+	
+	//dependecy - 
+	
 }
