@@ -10,8 +10,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.civic.pojos.Permit;
 import com.civic.pojos.User;
 import com.civic.services.AdminService;
+import com.civic.services.EventService;
 
 @RestController
 @RequestMapping("/api/admin")
@@ -20,6 +22,10 @@ public class AdminController {
 	//dependecy - AdminService
 	@Autowired
 	AdminService adminService;
+	
+	@Autowired
+	private EventService eventService;
+	
 	
 	//apis
 	@PutMapping("/profile")
@@ -48,6 +54,13 @@ public class AdminController {
 	        return ResponseEntity.ok(result);
 	 }
 	 
+	 @PutMapping("/events/{eventId}/permit")
+	 public ResponseEntity<String> updatePermitStatus(
+	            @PathVariable long eventId) {
+	        Permit permit = eventService.updatePermitStatus(eventId);
+	        return ResponseEntity.ok("Permit status updated to: " + permit.getStatus());
+	    }
+	 
 	 @DeleteMapping("/profile/{adminId}")
 	 public ResponseEntity<String> deleteAdminProfile(@PathVariable long adminId) {
 	        String result = adminService.deleteProfile(adminId);
@@ -58,5 +71,6 @@ public class AdminController {
 	 public ResponseEntity<?> deleteCitizenProfile(@PathVariable long userId){
 		 return ResponseEntity.ok(adminService.deleteCitizenProfile(userId));
 	 }
+	 
 	
 }

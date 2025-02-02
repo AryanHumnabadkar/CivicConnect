@@ -24,12 +24,17 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Events extends BaseEntity {
+public class Event extends BaseEntity {
 	
 	private String name;
+	
 	private String description;
+	
+	private EventType eventType;
+	
 	@Temporal(TemporalType.DATE)
 	private LocalDate date;
+	
 	@Temporal(TemporalType.TIME)
 	private LocalTime time;
 	
