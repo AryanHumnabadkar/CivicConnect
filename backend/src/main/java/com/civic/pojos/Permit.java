@@ -23,6 +23,6 @@ public class Permit extends BaseEntity{
 	private PermitStatus status;
 	
 	@OneToOne
-	private Recipt recipt;
+	private Receipt receipt;
 
 }

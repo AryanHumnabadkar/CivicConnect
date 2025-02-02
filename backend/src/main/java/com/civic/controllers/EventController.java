@@ -22,30 +22,24 @@ import com.civic.services.EventService;
 @RequestMapping("/api/events")
 public class EventController {
 	
-	//dependecny - EventService
+	//dependency - EventService
 	@Autowired
 	EventService eventService;
 	
-	//apis
+	//APIs
 	
-	@PostMapping("/register/{userId}")
+	@PostMapping("/register/{userId}") //later get userId from body only, DTO
 	public ResponseEntity<?> registerEvent(@RequestBody Event evntDetails, @PathVariable long userId){
 		Event registedEvent = eventService.registerEvent(evntDetails, userId);
 		return ResponseEntity.ok(registedEvent);
 	}
 	
-	@GetMapping("/{id}")
-    public ResponseEntity<Event> getEventById(@PathVariable long id) {
-		Event event = eventService.getEventById(id);
+	@GetMapping("/{eventId}")
+    public ResponseEntity<Event> getEventById(@PathVariable long eventId) {
+		Event event = eventService.getEventById(eventId);
         return ResponseEntity.ok(event);
     }
-	
-    @GetMapping
-    public ResponseEntity<List<Event>> getAllEvents() {
-        List<Event> events = eventService.getAllEvents();
-        return ResponseEntity.ok(events);
-    }
-    
+	   
     @GetMapping("/{eventId}/user")
     public ResponseEntity<User> getUserByEvent(@PathVariable long eventId) {
         User user = eventService.getUserByEvent(eventId);
@@ -58,7 +52,20 @@ public class EventController {
         return ResponseEntity.ok(permit);
     }
     
-    @DeleteMapping("/{evenId}")
+    @GetMapping //means get all
+    public ResponseEntity<List<Event>> getAllEvents() {
+        List<Event> events = eventService.getAllEvents();
+        return ResponseEntity.ok(events);
+    }
+    
+    @PutMapping("/{eventId}")
+    public ResponseEntity<String> updateEventDetails(@PathVariable long eventId) {
+    	//		
+        return ResponseEntity.ok("updation remaining");
+    }
+    
+    
+    @DeleteMapping("/{eventId}")
     public ResponseEntity<?> deleteEvent(@PathVariable long eventId) {
         return ResponseEntity.ok(eventService.deleteEvent(eventId));
     }

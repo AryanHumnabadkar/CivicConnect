@@ -8,10 +8,12 @@ import org.springframework.stereotype.Service;
 
 import com.civic.dao.EventDao;
 import com.civic.dao.PermitDao;
+import com.civic.dao.ReceiptDao;
 import com.civic.dao.UserDao;
 import com.civic.pojos.Event;
 import com.civic.pojos.Permit;
 import com.civic.pojos.PermitStatus;
+import com.civic.pojos.Receipt;
 import com.civic.pojos.Sector;
 import com.civic.pojos.User;
 
@@ -30,24 +32,35 @@ public class EventServiceImple implements EventService {
 	
 	@Autowired
 	private PermitDao permitDao;
+	
+	@Autowired
+	private ReceiptDao receiptDao;
 
 	@Override
 	public Event registerEvent(Event eventDetails, long userId) {
-		//fetch user how is registering event
 		try {
-			User user = userDao.findById(userId).orElseThrow(() -> new Exception("User not found!"));
-			eventDetails.setUser(user);
-			//create permit in PENDING status
+			//Here need to do: 1.First check if payment is done. If yes, get the Permit and set
+			//for now, create permit in PENDING status. Later do it in Permit
 			Permit permit  = new Permit();
 			permit.setStatus(PermitStatus.PENDING);
+			Receipt receipt = new Receipt();
+			receipt.setReciptDate(LocalDate.now());
+			receiptDao.save(receipt);
+			permit.setReceipt(receipt);
 			permitDao.save(permit);
 			eventDetails.setPermit(permit);
+			
+			//2.Get the User and set
+			User user = userDao.findById(userId).orElseThrow(() -> new Exception("User not found!"));
+			eventDetails.setUser(user);
+			
+			//3.save the event
 			return eventDao.save(eventDetails);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			return null;
 		}	
-		return null;
 	}
 
 	@Override
@@ -79,17 +92,19 @@ public class EventServiceImple implements EventService {
 
 	@Override
 	public String updateEventDetails(long eventId, Event eventUpdates) {
-		
+		//TODO - 
 		return null;
 	}
 
 	@Override
 	public Permit updatePermitStatus(long eventId) {
-		//admin controller will sue this
-		//find eventById
+		//AdminController will use this
 		try {
+			//1.find eventById
 			Event event = eventDao.findById(eventId)
 			        .orElseThrow(() -> new Exception("Event not found with ID: " + eventId));
+			
+			//2.Call permitService's methods acc to situations
 			//validations to change permitStatus : PENDING to APPROVED and PENDING to DENIED
 			Permit permit = event.getPermit();
 		    if (permit == null) {
@@ -107,7 +122,7 @@ public class EventServiceImple implements EventService {
 		    }
 		    
 		    //check if payment done
-		    if (permit.getRecipt() == null) {
+		    if (permit.getReceipt() == null) {
 		        throw new RuntimeException("Payment (receipt) is required to approve the permit.");
 		    }
 		    //change Permit Status
@@ -127,9 +142,8 @@ public class EventServiceImple implements EventService {
 
 	@Override
 	public String deleteEvent(long eventid) {
-		Event event;
 		try {
-			event = eventDao.findById(eventid).orElseThrow(() -> new Exception("EventNot found"));
+			Event event = eventDao.findById(eventid).orElseThrow(() -> new Exception("EventNot found"));
 			eventDao.delete(event);
 			return "Deleted successfully";
 		} catch (Exception e) {

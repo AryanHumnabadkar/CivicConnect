@@ -26,19 +26,26 @@ public class AdminController {
 	@Autowired
 	private EventService eventService;
 	
-	
-	//apis
+/*----------------profile APIs ------------------- */
 	@PutMapping("/profile")
 	public ResponseEntity<String> updateAdminProfile(@RequestBody User adminDetails) {
 	    return ResponseEntity.ok(adminService.updateProfile(adminDetails));
 	}
+	
+	 @DeleteMapping("/profile/{adminId}")
+	 public ResponseEntity<String> deleteAdminProfile(@PathVariable long adminId) {
+	        String result = adminService.deleteProfile(adminId);
+	        return ResponseEntity.ok(result);
+	 }
+	
+/*----------------APIs to manage users------------------- */
 	
 	@GetMapping("/users")
 	public ResponseEntity<?> getAllUsers(){
 		return ResponseEntity.ok(adminService.getAllUsers());
 	}
 	
-	@GetMapping("/user/{userId}")
+	@GetMapping("/users/{userId}")
 	public ResponseEntity<?> getUserDetails(@PathVariable long userId){
 		try {
             User user = adminService.getUserById(userId);
@@ -48,29 +55,31 @@ public class AdminController {
         }
 	}
 	 
-	 @PutMapping("/users/{userId}")
-	 public ResponseEntity<String> updateCitizenProfile(@PathVariable long userId, @RequestBody User citizenDetails) {
-	        String result = adminService.updateCitizenProfile(userId, citizenDetails);
-	        return ResponseEntity.ok(result);
-	 }
+	@PutMapping("/users/{userId}")
+	public ResponseEntity<String> updateCitizenProfile(@PathVariable long userId, @RequestBody User citizenDetails) {
+		String result = adminService.updateCitizenProfile(userId, citizenDetails);
+	    return ResponseEntity.ok(result);
+	}
 	 
-	 @PutMapping("/events/{eventId}/permit")
-	 public ResponseEntity<String> updatePermitStatus(
-	            @PathVariable long eventId) {
-	        Permit permit = eventService.updatePermitStatus(eventId);
-	        return ResponseEntity.ok("Permit status updated to: " + permit.getStatus());
-	    }
+	@DeleteMapping("/users/{userId}")
+	public ResponseEntity<?> deleteCitizenProfile(@PathVariable long userId){
+		return ResponseEntity.ok(adminService.deleteCitizenProfile(userId));
+	}
 	 
-	 @DeleteMapping("/profile/{adminId}")
-	 public ResponseEntity<String> deleteAdminProfile(@PathVariable long adminId) {
-	        String result = adminService.deleteProfile(adminId);
-	        return ResponseEntity.ok(result);
-	 }
+/*----------------APIs to manage events------------------- */
 	 
-	 @DeleteMapping("/users/{userId}")
-	 public ResponseEntity<?> deleteCitizenProfile(@PathVariable long userId){
-		 return ResponseEntity.ok(adminService.deleteCitizenProfile(userId));
-	 }
+	@PutMapping("/events/{eventId}/permit")
+	public ResponseEntity<String> updatePermitStatus(@PathVariable long eventId) {
+		Permit permit = eventService.updatePermitStatus(eventId);
+	    return ResponseEntity.ok("Permit status updated to: " + permit.getStatus());
+	}
+	
+	@DeleteMapping("/events/{eventId}")
+	public ResponseEntity<?> cancelEvent(@PathVariable long eventId){
+		return ResponseEntity.ok(eventService.deleteEvent(eventId));
+	}
+	  
+	 
 	 
 	
 }

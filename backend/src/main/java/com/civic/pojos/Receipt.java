@@ -17,7 +17,7 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class Recipt extends BaseEntity {
+public class Receipt extends BaseEntity {
 	
 	@Temporal(TemporalType.DATE)
 	@Column(name = "receipt_date")
