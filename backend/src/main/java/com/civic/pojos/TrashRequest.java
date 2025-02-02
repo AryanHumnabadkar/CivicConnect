@@ -23,12 +23,13 @@ import lombok.ToString;
 @Setter
 @ToString
 @EqualsAndHashCode
-public class TrashComplaint extends BaseEntity{
+public class TrashRequest extends BaseEntity{
 	
 	private String description;
 	
 	@Temporal(TemporalType.DATE)
 	private LocalDate requestDate;
+	
 	@Temporal(TemporalType.DATE)
 	private LocalDate serviceDate;
 	
