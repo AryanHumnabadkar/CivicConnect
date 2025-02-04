@@ -4,6 +4,7 @@ package com.civic.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,6 +22,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/auth")
+@CrossOrigin(origins = "http://localhost:5173")
 public class AuthController {
 
 	//dependecy - authService
@@ -37,7 +39,7 @@ public class AuthController {
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDTO loginData){	//here LoginRequest DTO
 		LoginRespDTO loginResponse = authService.login(loginData.getEmail(), loginData.getPassword()); 
-		return ResponseEntity.ok(loginResponse);	//ret jwt token here
+		return ResponseEntity.status(200).body(loginResponse);	//ret jwt token here
 	}
 	
 	@PostMapping("/logout/{userId}")
