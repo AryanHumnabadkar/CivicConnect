@@ -61,8 +61,10 @@ public class AuthServiceImple implements AuthService {
 			//create token
 			
 //			User createdUser = userDao.getUserByEmailAndPassword(email, password);
-			System.out.println("----------"+user);
+			System.out.println("----------"+user.getId());
 			LoginRespDTO loginResponse = mapper.map(user, LoginRespDTO.class);
+//			loginResponse.setToken("abc123");
+			loginResponse.setMessage("LoggedInSuccessfully");
 			return loginResponse;
 		} catch (RuntimeException e) {
 			// TODO: handle exception

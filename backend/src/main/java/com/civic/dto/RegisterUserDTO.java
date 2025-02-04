@@ -23,7 +23,7 @@ public class RegisterUserDTO {
 	private String name;
 	
 	@NotNull
-	@Email
+	@Email(message = "Email format wrong!!")
     private String email;
 	
 	@NotNull //also add regex

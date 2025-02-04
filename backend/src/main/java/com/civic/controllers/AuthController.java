@@ -3,6 +3,7 @@ package com.civic.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -16,6 +17,8 @@ import com.civic.dto.RegisterUserDTO;
 import com.civic.pojos.User;
 import com.civic.services.AuthService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/auth")
 public class AuthController {
@@ -27,13 +30,13 @@ public class AuthController {
 	//apis
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> registerUser(@RequestBody RegisterUserDTO userDetails){  //here RegisterUserDTO
+	public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserDTO userDetails){  //here RegisterUserDTO
 		return ResponseEntity.ok(new ApiResponse(authService.registerUser(userDetails)));
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody LoginReqDTO loginData){	//here LoginRequest DTO
-		LoginRespDTO loginResponse = authService.login(loginData.getEmail(), loginData.getPassword()); //pass email and pass from LoginRequest to service layer and there verification
+	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDTO loginData){	//here LoginRequest DTO
+		LoginRespDTO loginResponse = authService.login(loginData.getEmail(), loginData.getPassword()); 
 		return ResponseEntity.ok(loginResponse);	//ret jwt token here
 	}
 	

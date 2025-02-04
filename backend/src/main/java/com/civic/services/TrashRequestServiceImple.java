@@ -1,12 +1,20 @@
 package com.civic.services;
 
+import java.time.LocalDate;
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.civic.custom_exceptions.AuthException;
+import com.civic.custom_exceptions.ResourceNotFoundException;
 import com.civic.dao.TrashRequestDao;
+import com.civic.dao.UserDao;
+import com.civic.dto.CreateTrashReqDTO;
+import com.civic.pojos.Sector;
 import com.civic.pojos.TrashRequest;
+import com.civic.pojos.User;
 
 import jakarta.transaction.Transactional;
 
@@ -17,11 +25,33 @@ public class TrashRequestServiceImple implements TrashRequestService {
 	//dependecy - TrashRequestDao
 	@Autowired
 	private TrashRequestDao trashDao;
+	
+	@Autowired
+	private UserDao userDao;
+	
+	@Autowired
+	private ModelMapper mapper;
 
 	@Override
-	public TrashRequest createTrashRequest(TrashRequest trashRequestDto) {
-		//map dto to req
-		return trashDao.save(trashRequestDto);
+	public String createTrashRequest(CreateTrashReqDTO trashRequestDto) {
+		try {
+			//map dto to req
+			TrashRequest request = mapper.map(trashRequestDto, TrashRequest.class);
+			User user = userDao.findById(trashRequestDto.getUserId()).orElseThrow(() -> new AuthException("Not valid user found!!"));
+			request.setUser(user);
+			
+			Sector sector = user.getAddress().getSector();
+			if(sector == null)
+				throw new ResourceNotFoundException("User has no sector address registered, please update Address first!!");
+			request.setSector(sector);
+			
+			request.setRequestDate(LocalDate.now());
+			
+			trashDao.save(request);
+			return "Trash req registered!!";
+		} catch(RuntimeException e) {
+			return e.getMessage();
+		}
 	}
 
 	@Override

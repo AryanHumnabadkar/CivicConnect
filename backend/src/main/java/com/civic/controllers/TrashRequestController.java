@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.civic.dto.CreateTrashReqDTO;
 import com.civic.pojos.TrashRequest;
 import com.civic.services.TrashRequestService;
 
@@ -37,8 +38,8 @@ public class TrashRequestController {
     }
 
     @PostMapping
-    public ResponseEntity<TrashRequest> createTrashRequest(@RequestBody TrashRequest trashRequestDto) {
-    	TrashRequest createdTrashRequest = trashService.createTrashRequest(trashRequestDto);
+    public ResponseEntity<String> createTrashRequest(@RequestBody CreateTrashReqDTO trashRequestDto) {
+    	String createdTrashRequest = trashService.createTrashRequest(trashRequestDto);
         return ResponseEntity.status(HttpStatus.CREATED).body(createdTrashRequest);
     }
 
