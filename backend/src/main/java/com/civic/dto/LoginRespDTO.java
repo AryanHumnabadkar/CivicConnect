@@ -1,6 +1,5 @@
 package com.civic.dto;
 
-import com.civic.pojos.User;
 import com.civic.pojos.UserRoles;
 
 import lombok.AllArgsConstructor;
@@ -21,10 +20,5 @@ public class LoginRespDTO {
 	private String name;
 	private UserRoles role;
 	private String token;
-	private String message;
 
-	
-	public LoginRespDTO(String mesg) {
-		this.message = mesg;
-	}
 }

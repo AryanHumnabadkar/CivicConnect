@@ -51,9 +51,9 @@ public class TrashRequestController {
     }
 
     @PutMapping("/{requestId}")
-    public ResponseEntity<TrashReqDTO> updateTrashRequest(@PathVariable Long requestId, @Valid @RequestBody TrashReqDTO trashRequestDto) { //make updateTrashReq DTO
+    public ResponseEntity<TrashReqDTO> updateTrashRequest(@PathVariable Long requestId, @Valid @RequestBody CreateTrashReqDTO trashReqDetails) { //make updateTrashReq DTO
     	//To update description only
-    	TrashReqDTO updatedTrashRequest = trashService.updateTrashRequest(requestId, trashRequestDto);
+    	TrashReqDTO updatedTrashRequest = trashService.updateTrashRequest(requestId, trashReqDetails);
         return ResponseEntity.ok(updatedTrashRequest);
     }
 

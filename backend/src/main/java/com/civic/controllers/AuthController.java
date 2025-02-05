@@ -23,6 +23,7 @@ import jakarta.validation.Valid;
 @RestController
 @RequestMapping("/api/auth")
 @CrossOrigin()
+@Validated
 public class AuthController {
 
 	//dependecy - authService
@@ -32,12 +33,12 @@ public class AuthController {
 	//apis
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserDTO userDetails){  //here RegisterUserDTO
+	public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserDTO userDetails){  
 		return ResponseEntity.ok(new ApiResponse(authService.registerUser(userDetails)));
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDTO loginData){	//here LoginRequest DTO
+	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDTO loginData){	
 		LoginRespDTO loginResponse = authService.login(loginData.getEmail(), loginData.getPassword()); 
 		return ResponseEntity.status(200).body(loginResponse);	//ret jwt token here
 	}

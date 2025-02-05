@@ -6,7 +6,6 @@ import jakarta.persistence.Enumerated;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -38,7 +37,6 @@ public class RegisterUserDTO {
 
 	public RegisterUserDTO(@NotBlank String name, @NotNull @Email String email, @NotNull String password,
 			@NotNull String confirmPassword, @NotNull String role) {
-		super();
 		this.name = name;
 		this.email = email;
 		this.password = password;

@@ -11,7 +11,7 @@ public interface TrashRequestService {
 	String createTrashRequest(CreateTrashReqDTO trashRequestDto);
 	TrashReqDTO getTrashRequestById(Long requestId);
     List<TrashReqDTO> getAllTrashRequests();
-    TrashReqDTO updateTrashRequest(Long requestId, TrashReqDTO trashRequestDto); //need another dto
+    TrashReqDTO updateTrashRequest(Long requestId, CreateTrashReqDTO trashRequestDto); //need another dto
     String deleteTrashRequest(Long requestId);
 	
 

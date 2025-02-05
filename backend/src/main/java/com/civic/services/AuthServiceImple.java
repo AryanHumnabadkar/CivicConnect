@@ -27,44 +27,38 @@ public class AuthServiceImple implements AuthService {
 	@Override
 	public String registerUser(RegisterUserDTO userDetails) {
 		System.out.println(userDetails);
-		try {
-			//validations: 1.if email already exists
-			if (userDao.existsByEmail(userDetails.getEmail())) {
-				throw new AuthException("Email already exists!!");
-			}
-			//2.check if pass match - this could also be done in frontend only
-			if(!userDetails.getPassword().equals(userDetails.getConfirmPassword()))
-				throw new AuthException("Passwords do not match!");
-			//3. encode password
-			//TODO
-			User createdUser = mapper.map(userDetails, User.class);
-			userDao.save(createdUser);
-			return "User created " + createdUser.getName();
-		} catch (RuntimeException e) {
-			return e.getMessage();
+		//validations: 1.if email already exists
+		if (userDao.existsByEmail(userDetails.getEmail())) {
+			throw new AuthException("Email already exists!!");
 		}
+		//2.check if pass match - this could also be done in frontend only
+		if(!userDetails.getPassword().equals(userDetails.getConfirmPassword()))
+			throw new AuthException("Passwords do not match!");
+		//3. encode password
+		//TODO
+		User createdUser = mapper.map(userDetails, User.class);
+		userDao.save(createdUser);
+		return "User created " + createdUser.getName();
+
 		
 	}
 
 	@Override
 	public LoginRespDTO login(String email, String password) {
 		System.out.println(email + " " + password);
-			//find by email first
-			User user = userDao.findByEmail(email);
-			if(user == null)
-				throw new AuthException("No user with email "+ email);
-			//and check if passwords match by decoding
-			System.out.println(user.getPassword() + "- -" + password);
-			if(!user.getPassword().equals(password))
-				throw new AuthException("Wrong password!");
-			//create token
-			
-//			User createdUser = userDao.getUserByEmailAndPassword(email, password);
-			System.out.println("----------"+user.getId());
-			LoginRespDTO loginResponse = mapper.map(user, LoginRespDTO.class);
-//			loginResponse.setToken("abc123");
-			loginResponse.setMessage("LoggedInSuccessfully");
-			return loginResponse;
+		//find by email first
+		User user = userDao.findByEmail(email);
+		if(user == null)
+			throw new AuthException("No user with email "+ email);
+		//and check if passwords match by decoding
+		System.out.println(user.getPassword() + "- -" + password);
+		if(!user.getPassword().equals(password))
+			throw new AuthException("Wrong password!");
+		//create token
+		
+		LoginRespDTO loginResponse = mapper.map(user, LoginRespDTO.class);
+//		loginResponse.setToken("abc123");
+		return loginResponse;
 		
 	}
 

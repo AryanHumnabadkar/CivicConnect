@@ -13,20 +13,17 @@ import lombok.ToString;
 @Getter
 @Setter
 @ToString(callSuper = true)
-@EqualsAndHashCode
 public class User extends BaseEntity{
 	
 	private String name;
 	private String email;
 	private String password;
+	
 	@Enumerated
+	@Column(nullable = false)
 	private UserRoles role;
-	@Transient
-	private String confirmPassword;
 	
 	@OneToOne
 	private Address address;
-	
-	
 
 }

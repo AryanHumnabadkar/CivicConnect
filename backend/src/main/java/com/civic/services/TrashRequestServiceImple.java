@@ -80,12 +80,11 @@ public class TrashRequestServiceImple implements TrashRequestService {
 	}
 
 	@Override
-	public TrashReqDTO updateTrashRequest(Long requestId, TrashReqDTO trashRequestDto) {
+	public TrashReqDTO updateTrashRequest(Long requestId, CreateTrashReqDTO trashRequestDto) {
 		TrashRequest existingTrashRequest = trashDao.findById(requestId)
                 .orElseThrow(() -> new RuntimeException("Trash Request not found"));
 
         existingTrashRequest.setDescription(trashRequestDto.getDescription());
-        //set other details when using DTO
 
         TrashRequest updatedTrashRequest = trashDao.save(existingTrashRequest);
         
