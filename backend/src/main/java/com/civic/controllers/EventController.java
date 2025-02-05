@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -20,6 +21,7 @@ import com.civic.services.EventService;
 
 @RestController
 @RequestMapping("/api/events")
+@CrossOrigin
 public class EventController {
 	
 	//dependency - EventService
@@ -54,6 +56,7 @@ public class EventController {
     
     @GetMapping //means get all
     public ResponseEntity<List<Event>> getAllEvents() {
+    	System.out.println("Oye got req");
         List<Event> events = eventService.getAllEvents();
         return ResponseEntity.ok(events);
     }

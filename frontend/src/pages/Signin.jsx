@@ -23,7 +23,7 @@ const Signin = () => {
       console.log(response.data);
       localStorage.setItem("token", response.data.token);
       console.log("loggedin");
-      navigate("/");
+      navigate("/user");
     } catch (error) {
       console.error("Login failed:", error);
       // Handle login errors
