@@ -2,6 +2,7 @@ package com.civic.services;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,6 +13,7 @@ import com.civic.custom_exceptions.ResourceNotFoundException;
 import com.civic.dao.TrashRequestDao;
 import com.civic.dao.UserDao;
 import com.civic.dto.CreateTrashReqDTO;
+import com.civic.dto.TrashReqDTO;
 import com.civic.pojos.Sector;
 import com.civic.pojos.TrashRequest;
 import com.civic.pojos.User;
@@ -55,19 +57,30 @@ public class TrashRequestServiceImple implements TrashRequestService {
 	}
 
 	@Override
-	public TrashRequest getTrashRequestById(Long requestId) {
+	public TrashReqDTO getTrashRequestById(Long requestId) {
 		 TrashRequest trashRequest = trashDao.findById(requestId)
 	                .orElseThrow(() -> new RuntimeException("Trash Request not found"));
-		return trashRequest;
+		 
+		 TrashReqDTO request = mapper.map(trashRequest, TrashReqDTO.class);
+		 request.setSector(trashRequest.getSector().getSectorName().name());
+		 request.setUser(trashRequest.getUser().getName());
+		return request;
 	}
 
 	@Override
-	public List<TrashRequest> getAllTrashRequests() {
-		return trashDao.findAll();
+	public List<TrashReqDTO> getAllTrashRequests() {
+	    return trashDao.findAll().stream()
+	            .map(request -> {
+	                TrashReqDTO reqDTO = mapper.map(request, TrashReqDTO.class);
+	                reqDTO.setSector(request.getSector().getSectorName().name());
+	                reqDTO.setUser(request.getUser().getName());
+	                return reqDTO;
+	            })
+	            .collect(Collectors.toList());
 	}
 
 	@Override
-	public TrashRequest updateTrashRequest(Long requestId, TrashRequest trashRequestDto) {
+	public TrashReqDTO updateTrashRequest(Long requestId, TrashReqDTO trashRequestDto) {
 		TrashRequest existingTrashRequest = trashDao.findById(requestId)
                 .orElseThrow(() -> new RuntimeException("Trash Request not found"));
 
@@ -75,7 +88,8 @@ public class TrashRequestServiceImple implements TrashRequestService {
         //set other details when using DTO
 
         TrashRequest updatedTrashRequest = trashDao.save(existingTrashRequest);
-		return updatedTrashRequest;
+        
+		return mapper.map(updatedTrashRequest, TrashReqDTO.class);
 	}
 
 	@Override

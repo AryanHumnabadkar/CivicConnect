@@ -5,6 +5,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -15,43 +17,48 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.civic.dto.CreateTrashReqDTO;
+import com.civic.dto.TrashReqDTO;
 import com.civic.pojos.TrashRequest;
 import com.civic.services.TrashRequestService;
 
+import jakarta.validation.Valid;
+
 @RestController
 @RequestMapping("/api/requests")
+@CrossOrigin
+@Validated
 public class TrashRequestController {
 	
 	@Autowired
 	private TrashRequestService trashService;
 	
 	@GetMapping
-    public ResponseEntity<List<TrashRequest>> getAllTrashRequests() {
-        List<TrashRequest> trashRequests = trashService.getAllTrashRequests();
+    public ResponseEntity<List<TrashReqDTO>> getAllTrashRequests() {
+        List<TrashReqDTO> trashRequests = trashService.getAllTrashRequests();
         return ResponseEntity.ok(trashRequests);
     }
 
     @GetMapping("/{requestId}")
-    public ResponseEntity<TrashRequest> getTrashRequestById(@PathVariable Long requestId) {
-    	TrashRequest trashRequest = trashService.getTrashRequestById(requestId);
+    public ResponseEntity<TrashReqDTO> getTrashRequestById(@PathVariable Long requestId) {
+    	TrashReqDTO trashRequest = trashService.getTrashRequestById(requestId);
         return ResponseEntity.ok(trashRequest);
     }
 
     @PostMapping
-    public ResponseEntity<String> createTrashRequest(@RequestBody CreateTrashReqDTO trashRequestDto) {
-    	String createdTrashRequest = trashService.createTrashRequest(trashRequestDto);
-        return ResponseEntity.status(HttpStatus.CREATED).body(createdTrashRequest);
+    public ResponseEntity<String> createTrashRequest(@Valid @RequestBody CreateTrashReqDTO trashRequestDto) {
+    	String msg = trashService.createTrashRequest(trashRequestDto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(msg);
     }
 
     @PutMapping("/{requestId}")
-    public ResponseEntity<TrashRequest> updateTrashRequest(@PathVariable Long requestId, @RequestBody TrashRequest trashRequestDto) {
-    	TrashRequest updatedTrashRequest = trashService.updateTrashRequest(requestId, trashRequestDto);
+    public ResponseEntity<TrashReqDTO> updateTrashRequest(@PathVariable Long requestId, @Valid @RequestBody TrashReqDTO trashRequestDto) { //make updateTrashReq DTO
+    	//To update description only
+    	TrashReqDTO updatedTrashRequest = trashService.updateTrashRequest(requestId, trashRequestDto);
         return ResponseEntity.ok(updatedTrashRequest);
     }
 
     @DeleteMapping("/{requestId}")
-    public ResponseEntity<String> deleteTrashRequest(@PathVariable Long requestId) {
-    	
+    public ResponseEntity<String> deleteTrashRequest(@PathVariable Long requestId) { 	
         return ResponseEntity.ok(trashService.deleteTrashRequest(requestId));
     }
 	

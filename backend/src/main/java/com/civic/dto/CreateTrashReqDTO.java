@@ -14,6 +14,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class CreateTrashReqDTO {
 	
+	@NotNull
 	@NotBlank
 	private String description;
 		
@@ -22,7 +23,6 @@ public class CreateTrashReqDTO {
 	
 
 	public CreateTrashReqDTO(String description, long userId) {
-		super();
 		this.description = description;
 		this.userId = userId;
 	}
