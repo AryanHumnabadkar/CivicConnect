@@ -49,7 +49,6 @@ public class AuthServiceImple implements AuthService {
 	@Override
 	public LoginRespDTO login(String email, String password) {
 		System.out.println(email + " " + password);
-		try {
 			//find by email first
 			User user = userDao.findByEmail(email);
 			if(user == null)
@@ -66,10 +65,6 @@ public class AuthServiceImple implements AuthService {
 //			loginResponse.setToken("abc123");
 			loginResponse.setMessage("LoggedInSuccessfully");
 			return loginResponse;
-		} catch (RuntimeException e) {
-			// TODO: handle exception
-			return new LoginRespDTO(e.getMessage());
-		}
 		
 	}
 
