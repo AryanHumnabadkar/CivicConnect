@@ -4,8 +4,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -44,6 +46,13 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(ResourceNotFoundException.class)
 	@ResponseStatus(value = HttpStatus.NOT_FOUND)
 	public ApiResponse handleResourceNotFoundException(ResourceNotFoundException e) {
+		System.out.println("in catch-all " + e);
+		return new ApiResponse(e.getMessage());
+	}
+	
+	@ExceptionHandler(UsernameNotFoundException.class)
+	@ResponseStatus(value = HttpStatus.NOT_FOUND)
+	public ApiResponse UsernameNotFoundException(UsernameNotFoundException e) {
 		System.out.println("in catch-all " + e);
 		return new ApiResponse(e.getMessage());
 	}

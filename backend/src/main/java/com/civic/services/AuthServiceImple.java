@@ -2,6 +2,7 @@ package com.civic.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.civic.custom_exceptions.AuthException;
@@ -24,6 +25,9 @@ public class AuthServiceImple implements AuthService {
 	@Autowired
 	private ModelMapper mapper;
 	
+	@Autowired
+	private PasswordEncoder encoder;
+	
 	@Override
 	public String registerUser(RegisterUserDTO userDetails) {
 		System.out.println(userDetails);
@@ -34,9 +38,10 @@ public class AuthServiceImple implements AuthService {
 		//2.check if pass match - this could also be done in frontend only
 		if(!userDetails.getPassword().equals(userDetails.getConfirmPassword()))
 			throw new AuthException("Passwords do not match!");
-		//3. encode password
-		//TODO
 		User createdUser = mapper.map(userDetails, User.class);
+		
+		//3. encode password and save
+		createdUser.setPassword(encoder.encode(createdUser.getPassword()));//pwd : encrypted using SHA
 		userDao.save(createdUser);
 		return "User created " + createdUser.getName();
 
@@ -47,9 +52,8 @@ public class AuthServiceImple implements AuthService {
 	public LoginRespDTO login(String email, String password) {
 		System.out.println(email + " " + password);
 		//find by email first
-		User user = userDao.findByEmail(email);
-		if(user == null)
-			throw new AuthException("No user with email "+ email);
+		User user = userDao.findByEmail(email).orElseThrow(() -> new AuthException("No user with email "+ email));
+		
 		//and check if passwords match by decoding
 		System.out.println(user.getPassword() + "- -" + password);
 		if(!user.getPassword().equals(password))
