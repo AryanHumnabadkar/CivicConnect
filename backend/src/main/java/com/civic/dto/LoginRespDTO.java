@@ -15,10 +15,7 @@ import lombok.ToString;
 @AllArgsConstructor
 public class LoginRespDTO {
 	//UserDetails and JWT token
-	private Long id;
-	private String email;
-	private String name;
-	private UserRoles role;
+	private Long userId;
 	private String token;
 
 }

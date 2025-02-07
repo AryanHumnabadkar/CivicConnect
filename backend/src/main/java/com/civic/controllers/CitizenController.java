@@ -30,20 +30,17 @@ public class CitizenController {
 	
 	@GetMapping("/profile/{userId}")
 	public ResponseEntity<?> getProfileDetails(@PathVariable long userId){
-		//here also get header, check if both userId's are same then only send data of current user only
 		return ResponseEntity.ok(citizenService.getProfileDetails(userId));
 	}
 	
 	@PutMapping("/profile/{userId}")
 	public ResponseEntity<?> updateProfile(@Valid @RequestBody UpdateUserDTO userDetails, @PathVariable long userId){
-		//here also get header, check if both userId's are same then only send data of current user only
 		String msg = citizenService.updateProfile(userId, userDetails); //also send token to extract id, instead of directly id
 		return ResponseEntity.ok(new ApiResponse(msg));
 	}
 	
 	@DeleteMapping("/profile/{userId}")
 	public ResponseEntity<?> deleteProfile(@PathVariable long userId){
-		//here also get header, check if both userId's are same then only send data of current user only
 		String msg = citizenService.deleteProfile(userId);
 		return ResponseEntity.ok(new ApiResponse(msg));
 	}

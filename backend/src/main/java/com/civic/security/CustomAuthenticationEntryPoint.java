@@ -17,7 +17,7 @@ public class CustomAuthenticationEntryPoint implements AuthenticationEntryPoint 
 	public void commence(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException authException) throws IOException, ServletException {
 		// send error message : SC 401
-		System.out.println("------imma here");
+		System.out.println(authException.getMessage());
 		// Set the response status code
         response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
         // Set the response content type

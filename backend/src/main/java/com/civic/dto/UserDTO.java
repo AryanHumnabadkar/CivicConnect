@@ -9,9 +9,9 @@ import lombok.Setter;
 @Getter
 @Setter
 public class UserDTO {
+	private long id;
 	private String name;
 	private String email;
-	private String password;
 	
 	@Enumerated
 	private UserRoles role;

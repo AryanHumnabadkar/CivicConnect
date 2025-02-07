@@ -68,6 +68,8 @@ public class JwtUtils {
 		return claims;		
 	}
 	
+	// Accepts Collection<GrantedAuthority> n rets comma separated list of it's string form
+		
 	private String getAuthoritiesInString(Collection<? extends GrantedAuthority> authorities) {
 		String authorityString = authorities.stream().
 				map(authority -> authority.getAuthority())
@@ -78,7 +80,8 @@ public class JwtUtils {
 		
 	public List<GrantedAuthority> getAuthoritiesFromClaims(Claims claims) {
 		String authString = (String) claims.get("authorities");
-		List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authString);
+		System.out.println("printing authorities: ");
+		List<GrantedAuthority> authorities = AuthorityUtils.commaSeparatedStringToAuthorityList(authString.substring(10));
 		authorities.forEach(System.out::println);
 		return authorities;
 	}

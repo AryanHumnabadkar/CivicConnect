@@ -2,15 +2,18 @@ package com.civic.services;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.civic.custom_exceptions.AuthException;
 import com.civic.dao.UserDao;
-import com.civic.dto.ApiResponse;
 import com.civic.dto.LoginRespDTO;
 import com.civic.dto.RegisterUserDTO;
 import com.civic.pojos.User;
+import com.civic.security.JwtUtils;
 
 import jakarta.transaction.Transactional;
 
@@ -27,6 +30,13 @@ public class AuthServiceImple implements AuthService {
 	
 	@Autowired
 	private PasswordEncoder encoder;
+	
+	@Autowired
+	private AuthenticationManager authManager;
+	
+	//JwtUtils
+	@Autowired
+	private JwtUtils jwtUtils;
 	
 	@Override
 	public String registerUser(RegisterUserDTO userDetails) {
@@ -50,26 +60,20 @@ public class AuthServiceImple implements AuthService {
 
 	@Override
 	public LoginRespDTO login(String email, String password) {
-		System.out.println(email + " " + password);
 		//find by email first
-		User user = userDao.findByEmail(email).orElseThrow(() -> new AuthException("No user with email "+ email));
+		User user = userDao.findByEmail(email).orElseThrow(() -> new AuthException("Wrong Email!! "));
 		
-		//and check if passwords match by decoding
-		System.out.println(user.getPassword() + "- -" + password);
-		if(!user.getPassword().equals(password))
-			throw new AuthException("Wrong password!");
-		//create token
-		
-		LoginRespDTO loginResponse = mapper.map(user, LoginRespDTO.class);
-//		loginResponse.setToken("abc123");
-		return loginResponse;
+	    Authentication verifiedAuth = authManager.authenticate(new UsernamePasswordAuthenticationToken(email, password));		
+
+		//create token   
+	    LoginRespDTO response = new LoginRespDTO(user.getId(),jwtUtils.generateToken(verifiedAuth));
+		return response;
 		
 	}
 
 	@Override
 	public String logout(long id) {
-		//invalidate token later. 
-		System.out.println(id);
+	    // No server-side invalidation needed. Already set the token for short time
 		return "Logged out successfully";
 	}
 

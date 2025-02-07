@@ -1,5 +1,6 @@
 package com.civic.pojos;
 
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
@@ -19,8 +20,8 @@ public class User extends BaseEntity{
 	private String email;
 	private String password;
 	
-	@Enumerated
-	@Column(nullable = false)
+	@Enumerated(EnumType.STRING)
+	@Column(length = 30, nullable = false)
 	private UserRoles role;
 	
 	@OneToOne

@@ -1,11 +1,12 @@
 package com.civic.pojos;
 
+import lombok.Getter;
 import lombok.ToString;
 
 @ToString
+@Getter
 public enum UserRoles {
 	
-	ADMIN,
-	CITIZEN
-
+	ROLE_ADMIN,
+	ROLE_CITIZEN
 }
