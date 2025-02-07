@@ -35,9 +35,8 @@ public class CitizenServiceImple implements CitizenService {
 	
 	@Override
 	public UserDTO getProfileDetails(long userId) {
-		//here also get header, check if both userId's are same then only send data of current user only
 		User user = userDao.findById(userId).
-				orElseThrow(() -> new ResourceNotFoundException("User not found!"));	
+				orElseThrow(() -> new ResourceNotFoundException("User not found with userId " + userId + " !"));	
 		return mapper.map(user, UserDTO.class);
 	}
 
@@ -45,16 +44,18 @@ public class CitizenServiceImple implements CitizenService {
 	public String updateProfile(long userId, UpdateUserDTO userDetails) {
 		//1. get id and check if user exists
 		User existingUser = userDao.findById(userId)
-				.orElseThrow(() -> new ResourceNotFoundException("User not found!"));
+				.orElseThrow(() -> new ResourceNotFoundException("User not found with userId " + userId + " !"));
 		//if got
 		if(!userDetails.getEmail().equals(""))
 			existingUser.setEmail(userDetails.getEmail());
 		
 		if(userDetails.getAddress() != null) {
+			//first delete prev address from db and cascade null
+			addressDao.delete(existingUser.getAddress());
 			//need to set sector and address
 			Sector sector = sectorDao.findBySectorName(SectorValues.valueOf(userDetails.getAddress().getSector()));
 			if (sector == null) 
-				throw new ResourceNotFoundException("Invalid sector!");
+				throw new ResourceNotFoundException("Invalid sectorName!");
 			Address address = mapper.map(userDetails.getAddress(), Address.class);
 			address.setSector(sector);
 			addressDao.save(address);
@@ -71,7 +72,7 @@ public class CitizenServiceImple implements CitizenService {
 	public String deleteProfile(long userId) {
 		// Check if the user exists
         if (!userDao.existsById(userId)) {
-           throw new ResourceNotFoundException("User not found!");
+           throw new ResourceNotFoundException("User not found with userId " + userId + " !");
         }
         // Delete the user
         userDao.deleteById(userId);

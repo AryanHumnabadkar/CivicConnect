@@ -30,16 +30,9 @@ import jakarta.validation.Valid;
 @Validated
 public class AuthController {
  
-	//dependecy - authService
+	//dependency - authService, AuthenticationManager, JwtUtils
 	@Autowired
 	private AuthService authService;
-	
-	@Autowired
-	private AuthenticationManager authManager;
-	
-	//JwtUtils
-	@Autowired
-	private JwtUtils jwtUtils;
 	
 	//apis
 	
@@ -50,16 +43,14 @@ public class AuthController {
 	
 	@PostMapping("/login")
 	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDTO loginData){	
-		//first
-	    Authentication verifiedAuth = authManager.authenticate(new UsernamePasswordAuthenticationToken(loginData.getEmail(), loginData.getPassword()));		
-		return ResponseEntity.status(200).body(new ApiResponse(jwtUtils.generateToken(verifiedAuth)));	//ret jwt token here
+		//TODO: emailOrPassword exception?
+		return ResponseEntity.status(200).body(authService.login(loginData.getEmail(), loginData.getPassword()));	//ret jwt token here
 	}
 	
 	@PostMapping("/logout/{userId}")
 	public ResponseEntity<?> logout(@PathVariable Long userId){ 
-		//get token here and invalidate
-		String logoutmsg = authService.logout(userId); 
-		return ResponseEntity.ok(new ApiResponse(logoutmsg));
+	    // No server-side invalidation needed. Invalidate on frontend only
+		return ResponseEntity.ok(new ApiResponse(authService.logout(userId)));
 	}
 		
 	

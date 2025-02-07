@@ -27,6 +27,7 @@ public class JwtAuthFilter extends OncePerRequestFilter{
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
 			throws ServletException, IOException {
 		//get Authorization header form req
+		System.out.println("in jwt filter");
 		String authHeader = request.getHeader("Authorization");
 		
 		if(authHeader != null && authHeader.startsWith("Bearer ")) {
@@ -43,7 +44,7 @@ public class JwtAuthFilter extends OncePerRequestFilter{
 			
 			//save this auth token in spring sec context, so next filters(servlets)will not retry auth again
 			SecurityContextHolder.getContext().setAuthentication(token);
-			System.out.println("saved token in se context: ");
+			System.out.println("saved token in se context: " + token);
 			
 		}
 		
