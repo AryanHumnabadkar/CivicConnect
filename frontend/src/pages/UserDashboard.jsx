@@ -16,18 +16,22 @@ export const UserDashBoard = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const userId = localStorage.getItem("userId");
-    axios
-      .get(`http://localhost:8080/api/citizen/profile/${userId}`, {
-        headers: {
-          Authorization: "Bearer " + localStorage.getItem("token"),
-        },
-      })
-      .then((response) => {
-        setUser(response.data);
-        console.log(response.data);
-      });
-  }, []);
+    if (localStorage.getItem("token") === null) {
+      navigate("/signin");
+    } else {
+      const userId = localStorage.getItem("userId");
+      axios
+        .get(`http://localhost:8080/api/citizen/profile/${userId}`, {
+          headers: {
+            Authorization: "Bearer " + localStorage.getItem("token"),
+          },
+        })
+        .then((response) => {
+          setUser(response.data);
+          console.log(response.data);
+        });
+    }
+  });
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#4A8DAB] to-[#78B3CE]">
@@ -92,17 +96,37 @@ export const UserDashBoard = () => {
 };
 
 function DropDownMenu() {
+  const navigate = useNavigate();
   return (
     <div className="absolute right-0 mt-2 w-48 bg-[#FBF8EF] rounded-lg shadow-lg py-1 z-10">
       <button className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300">
         <Settings className="w-4 h-4 mr-2" />
         Profile Settings
       </button>
-      <button className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300">
+      <button
+        className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300"
+        onClick={() => navigate("/create-trash")}
+      >
         <Trash2 className="w-4 h-4 mr-2" />
         Create Trash Pickup
       </button>
-      <button className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300">
+      <button
+        className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300"
+        onClick={async () => {
+          axios
+            .post(`http://localhost:8080/api/auth/logout`, {
+              headers: {
+                Authorization: "Bearer " + localStorage.getItem("token"),
+              },
+            })
+            .then((response) => {
+              console.log("Logout successful:", response.data);
+              localStorage.removeItem("token");
+              localStorage.removeItem("userId");
+              navigate("/signin");
+            });
+        }}
+      >
         <LogOut className="w-4 h-4 mr-2" />
         Logout
       </button>

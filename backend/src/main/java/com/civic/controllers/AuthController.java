@@ -55,11 +55,19 @@ public class AuthController {
 		return ResponseEntity.status(200).body(new ApiResponse(jwtUtils.generateToken(verifiedAuth)));	//ret jwt token here
 	}
 	
+<<<<<<< Updated upstream
 	@PostMapping("/logout/{userId}")
 	public ResponseEntity<?> logout(@PathVariable Long userId){ 
 		//get token here and invalidate
 		String logoutmsg = authService.logout(userId); 
 		return ResponseEntity.ok(new ApiResponse(logoutmsg));
+=======
+	@PostMapping("/logout")
+	public ResponseEntity<?> logout(){ 
+	    // No server-side invalidation needed. Invalidate on frontend only
+		System.out.println("------------------------------");
+		return ResponseEntity.ok(new ApiResponse(authService.logout()));
+>>>>>>> Stashed changes
 	}
 		
 	
