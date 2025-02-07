@@ -1,57 +1,85 @@
 import { User, Settings, Trash2, LogOut } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { EventsList } from "../components/EventsList";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 export const UserDashBoard = () => {
   const [showDropdown, setShowDropdown] = useState(false);
-
+  const [user, setUser] = useState({
+    id: "",
+    name: "",
+    email: "",
+    role: "",
+    address: null,
+  });
   const navigate = useNavigate();
 
+  useEffect(() => {
+    const userId = localStorage.getItem("userId");
+    axios
+      .get(`http://localhost:8080/api/citizen/profile/${userId}`, {
+        headers: {
+          Authorization: "Bearer " + localStorage.getItem("token"),
+        },
+      })
+      .then((response) => {
+        setUser(response.data);
+        console.log(response.data);
+      });
+  }, []);
+
   return (
-    <>
-      <div className="bg-green-200">
-        <header className="bg-blue-400 shadow-sm ">
-          <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
-            <h1 className="text-2xl font-semibold text-gray-800">Hey User</h1>
+    <div className="min-h-screen bg-gradient-to-r from-[#4A8DAB] to-[#78B3CE]">
+      <header className="bg-[#FBF8EF] shadow-lg">
+        <div className="max-w-7xl mx-auto px-4 py-4 flex justify-between items-center">
+          <h1 className="text-2xl font-bold text-[#4A8DAB]">
+            Hey there, {user.name.split(" ")[0]}
+          </h1>
 
-            {/* User options  */}
-            <div className="relative">
-              <button
-                onClick={() => setShowDropdown(!showDropdown)}
-                className="flex items-center space-x-2 text-gray-700 hover:text-gray-900"
-              >
-                <div className="w-10 h-10 rounded-full bg-gray-200 flex items-center justify-center">
-                  <User className="w-6 h-6" />
-                </div>
-              </button>
+          <div className="relative">
+            <button
+              onClick={() => setShowDropdown(!showDropdown)}
+              className="flex items-center space-x-2 text-[#4A8DAB] hover:text-[#F96E2A] transition-colors duration-300"
+            >
+              <div className="w-10 h-10 rounded-full bg-[#78B3CE] flex items-center justify-center hover:bg-[#4A8DAB] transition-colors duration-300">
+                <User className="w-6 h-6 text-[#FBF8EF]" />
+              </div>
+            </button>
 
-              {/* Dropdown Compo */}
-              {showDropdown && <DropDownMenu />}
+            {showDropdown && <DropDownMenu />}
+          </div>
+        </div>
+      </header>
+
+      <div className="max-w-7xl mx-auto px-4 py-6">
+        <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
+          <div className="md:col-span-2">
+            <div className="bg-[#FBF8EF] rounded-lg shadow-lg p-6 transform transition-all hover:scale-102">
+              <h2 className="text-xl font-bold text-[#4A8DAB] mb-4">
+                Newsletters
+              </h2>
+              {/* Newsletter content here */}
             </div>
           </div>
-        </header>
 
-        <div className="max-w-7xl mx-auto px-4 py-6">
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
-            <div className="md:col-span-2 bg-red-400">NewsLetters</div>
-            <div className="md:col-span-3 bg-yellow-200">
-              <h2 className="text-xl font-semibold text-gray-800">
+          <div className="md:col-span-3">
+            <div className="bg-[#FBF8EF] rounded-lg shadow-lg p-6 transform transition-all hover:scale-102">
+              <h2 className="text-xl font-bold text-[#4A8DAB] mb-4">
                 Upcoming Events
               </h2>
-              {/* Here buttons to add a events and show all events means go to separate events page */}
-              <div className="flex justify-center">
+              <div className="flex justify-center space-x-4 mb-6">
                 <button
-                  className="bg-amber-200 mx-2"
+                  className="bg-[#F96E2A] text-[#FBF8EF] px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:ring-offset-2"
                   onClick={() => navigate("/home")}
                 >
                   Show all events
                 </button>
                 <button
-                  className="bg-amber-200 mx-2"
+                  className="bg-[#F96E2A] text-[#FBF8EF] px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:ring-offset-2"
                   onClick={() => navigate("/home")}
                 >
-                  Register a event
+                  Register an event
                 </button>
               </div>
               <EventsList />
@@ -59,22 +87,22 @@ export const UserDashBoard = () => {
           </div>
         </div>
       </div>
-    </>
+    </div>
   );
 };
 
 function DropDownMenu() {
   return (
-    <div className="absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg py-1 z-10">
-      <button className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full">
+    <div className="absolute right-0 mt-2 w-48 bg-[#FBF8EF] rounded-lg shadow-lg py-1 z-10">
+      <button className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300">
         <Settings className="w-4 h-4 mr-2" />
         Profile Settings
       </button>
-      <button className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full">
+      <button className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300">
         <Trash2 className="w-4 h-4 mr-2" />
         Create Trash Pickup
       </button>
-      <button className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full">
+      <button className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300">
         <LogOut className="w-4 h-4 mr-2" />
         Logout
       </button>
