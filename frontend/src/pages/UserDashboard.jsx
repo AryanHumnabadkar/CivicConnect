@@ -31,7 +31,7 @@ export const UserDashBoard = () => {
           console.log(response.data);
         });
     }
-  });
+  }, []);
 
   return (
     <div className="min-h-screen bg-gradient-to-r from-[#4A8DAB] to-[#78B3CE]">

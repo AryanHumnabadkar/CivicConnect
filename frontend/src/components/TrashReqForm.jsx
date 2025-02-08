@@ -1,13 +1,23 @@
+/* eslint-disable react/prop-types */
 /* eslint-disable no-unused-vars */
 import { ScrollText } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import ConfirmationDialog from "./ConfirmationDialog";
 
-const TrashRequestForm = () => {
+const TrashRequestForm = ({ onSuccess }) => {
   const [description, setDescription] = useState("");
+  const [isRegularRequest, setIsRegularRequest] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [error, setError] = useState("");
+
+  useEffect(() => {
+    if (isRegularRequest) {
+      setDescription("Regular pickup");
+    } else {
+      setDescription("");
+    }
+  }, [isRegularRequest]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -34,10 +44,10 @@ const TrashRequestForm = () => {
       );
 
       if (response.status === 200 || response.status === 201) {
-        console.log("Request submitted successfully:", response.data);
         setDescription("");
         setIsDialogOpen(false);
         setError("");
+        onSuccess(); // Call the callback to refresh the list
       }
     } catch (error) {
       setError(error.response?.data?.message || "Error submitting request");
@@ -51,24 +61,57 @@ const TrashRequestForm = () => {
     <>
       <div className="bg-[#FBF8EF] rounded-lg shadow-lg p-6">
         <div className="mb-6">
-          <h2 className="text-xl text-[#4A8DAB] flex items-center gap-2">
+          <h2 className="text-xl text-[#4A8DAB] flex items-center gap-2 font-bold">
             <ScrollText className="text-[#F96E2A]" />
-            New Trash Request
+            New Trash-Pickup Request
           </h2>
         </div>
         <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
+          <div className="mb-4">
             <label className="block text-sm font-medium text-[#F96E2A] mb-2">
-              Description
+              Request Type
             </label>
-            <textarea
-              value={description}
-              onChange={(e) => setDescription(e.target.value)}
-              className="w-full p-2 border border-[#78B3CE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:border-transparent min-h-[120px]"
-              placeholder="Please describe your trash pickup request..."
-              required
-            />
+            <div className="flex items-center gap-4">
+              <label className="inline-flex items-center">
+                <input
+                  type="radio"
+                  className="form-radio text-[#F96E2A] focus:ring-[#4A8DAB]"
+                  name="requestType"
+                  checked={isRegularRequest}
+                  onChange={() => setIsRegularRequest(true)}
+                />
+                <span className="ml-2 text-[#4A8DAB]">Regular Pickup</span>
+              </label>
+              <label className="inline-flex items-center">
+                <input
+                  type="radio"
+                  className="form-radio text-[#F96E2A] focus:ring-[#4A8DAB]"
+                  name="requestType"
+                  checked={!isRegularRequest}
+                  onChange={() => setIsRegularRequest(false)}
+                />
+                <span className="ml-2 text-[#4A8DAB]">
+                  Occasional or Extra Request
+                </span>
+              </label>
+            </div>
           </div>
+
+          {!isRegularRequest && (
+            <div>
+              <label className="block text-sm font-medium text-[#F96E2A] mb-2">
+                Description
+              </label>
+              <textarea
+                value={description}
+                onChange={(e) => setDescription(e.target.value)}
+                className="w-full p-2 border border-[#78B3CE] rounded-lg focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:border-transparent min-h-[120px]"
+                placeholder="Is this something unusual or occasional? Tell us more..."
+                required
+              />
+            </div>
+          )}
+
           <div className="flex justify-center">
             <button
               type="submit"
