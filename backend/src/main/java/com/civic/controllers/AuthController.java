@@ -1,6 +1,5 @@
 package com.civic.controllers;
 
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -47,6 +46,7 @@ public class AuthController {
 		return ResponseEntity.status(200).body(authService.login(loginData.getEmail(), loginData.getPassword()));	//ret jwt token here
 	}
 	
+<<<<<<< Updated upstream
 	@PostMapping("/logout/{userId}")
 	public ResponseEntity<?> logout(@PathVariable Long userId){ 
 	    // No server-side invalidation needed. Invalidate on frontend only
