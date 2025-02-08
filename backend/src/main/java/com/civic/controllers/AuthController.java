@@ -28,31 +28,31 @@ import jakarta.validation.Valid;
 @CrossOrigin()
 @Validated
 public class AuthController {
- 
-	//dependency - authService, AuthenticationManager, JwtUtils
+
+	// dependency - authService, AuthenticationManager, JwtUtils
 	@Autowired
 	private AuthService authService;
-	
-	//apis
-	
-	@PostMapping("/register") 
-	public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserDTO userDetails){  
+
+	// apis
+
+	@PostMapping("/register")
+	public ResponseEntity<?> registerUser(@Valid @RequestBody RegisterUserDTO userDetails) {
 		return ResponseEntity.ok(new ApiResponse(authService.registerUser(userDetails)));
 	}
-	
+
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDTO loginData){	
-		//TODO: emailOrPassword exception?
-		return ResponseEntity.status(200).body(authService.login(loginData.getEmail(), loginData.getPassword()));	//ret jwt token here
+	public ResponseEntity<?> login(@Valid @RequestBody LoginReqDTO loginData) {
+		// TODO: emailOrPassword exception?
+		return ResponseEntity.status(200).body(authService.login(loginData.getEmail(), loginData.getPassword())); // ret
+																													// jwt
+																													// token
+																													// here
 	}
-	
-<<<<<<< Updated upstream
+
 	@PostMapping("/logout/{userId}")
-	public ResponseEntity<?> logout(@PathVariable Long userId){ 
-	    // No server-side invalidation needed. Invalidate on frontend only
-		return ResponseEntity.ok(new ApiResponse(authService.logout(userId)));
+	public ResponseEntity<?> logout(@PathVariable Long userId) {
+		// No server-side invalidation needed. Invalidate on frontend only
+		return ResponseEntity.ok(new ApiResponse(authService.logout()));
 	}
-		
-	
 
 }

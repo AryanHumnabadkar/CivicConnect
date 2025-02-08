@@ -72,9 +72,7 @@ public class AuthServiceImple implements AuthService {
 	}
 
 	@Override
-<<<<<<< Updated upstream
-
-	public String logout(long id) {
+	public String logout() {
 		// No server-side invalidation needed. Already set the token for short time
 		return "Logged out successfully";
 	}
