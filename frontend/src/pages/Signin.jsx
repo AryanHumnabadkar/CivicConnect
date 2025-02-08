@@ -21,6 +21,11 @@ function Signin() {
         {
           email,
           password,
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         }
       );
       console.log("Login successful:", response.data);
@@ -77,13 +82,15 @@ function Signin() {
             />
           </div>
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-[#F96E2A] text-[#FBF8EF] py-2 px-4 rounded-lg hover:bg-opacity-90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:ring-offset-2"
-          >
-            {isLoading ? "Logging in..." : "Login"}
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="px-8 bg-[#F96E2A] text-[#FBF8EF] py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:ring-offset-2"
+            >
+              {isLoading ? "Logging in..." : "Login"}
+            </button>
+          </div>
         </form>
         <p className="text-center text-[#4A8DAB] mt-6">
           Dont have an account?{" "}

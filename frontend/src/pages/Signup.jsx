@@ -153,13 +153,15 @@ const Signup = () => {
 
           {error && <p className="text-red-500 text-sm text-center">{error}</p>}
 
-          <button
-            type="submit"
-            disabled={isLoading}
-            className="w-full bg-[#F96E2A] text-[#FBF8EF] py-2 px-4 rounded-lg hover:bg-opacity-90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:ring-offset-2"
-          >
-            {isLoading ? "Creating Account..." : "Sign Up"}
-          </button>
+          <div className="flex justify-center">
+            <button
+              type="submit"
+              disabled={isLoading}
+              className="px-8 bg-[#F96E2A] text-[#FBF8EF] py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:ring-offset-2"
+            >
+              {isLoading ? "Creating Account..." : "Sign Up"}
+            </button>
+          </div>
         </form>
 
         <p className="text-center text-[#4A8DAB] mt-6">

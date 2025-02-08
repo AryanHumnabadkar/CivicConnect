@@ -105,14 +105,14 @@ function DropDownMenu() {
       </button>
       <button
         className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300"
-        onClick={() => navigate("/create-trash")}
+        onClick={() => navigate("/trash/create")}
       >
         <Trash2 className="w-4 h-4 mr-2" />
         Create Trash Pickup
       </button>
       <button
         className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300"
-        onClick={async () => {
+        onClick={() => {
           axios
             .post(`http://localhost:8080/api/auth/logout`, {
               headers: {
@@ -124,6 +124,10 @@ function DropDownMenu() {
               localStorage.removeItem("token");
               localStorage.removeItem("userId");
               navigate("/signin");
+            })
+            .catch((err) => {
+              console.error("Logout error:", err);
+              alert("Failed to logout. Please try again.");
             });
         }}
       >
