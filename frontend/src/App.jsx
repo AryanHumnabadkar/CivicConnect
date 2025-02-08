@@ -20,7 +20,7 @@ function App() {
           <Route path="/user" element={<UserDashBoard />} />
           <Route path="/admin" element={<AdminDashBoard />} />
           <Route path="/updateProfile" element={<UpdateProfile />} />
-          <Route path="/trash/create" element={<TrashRequestPage />} />
+          <Route path="/trash" element={<TrashRequestPage />} />
         </Routes>
       </BrowserRouter>
     </div>
