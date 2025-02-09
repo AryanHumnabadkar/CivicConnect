@@ -3,13 +3,14 @@
 import { ScrollText } from "lucide-react";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import ConfirmationDialog from "./ConfirmationDialog";
+import Dialog from "./Dailog";
 
 const TrashRequestForm = ({ onSuccess }) => {
   const [description, setDescription] = useState("");
   const [isRegularRequest, setIsRegularRequest] = useState(false);
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [error, setError] = useState("");
+  const [showSuccessDialog, setShowSuccessDialog] = useState(false);
 
   useEffect(() => {
     if (isRegularRequest) {
@@ -46,6 +47,7 @@ const TrashRequestForm = ({ onSuccess }) => {
       if (response.status === 200 || response.status === 201) {
         setDescription("");
         setIsDialogOpen(false);
+        setShowSuccessDialog(true);
         setError("");
         onSuccess(); // Call the callback to refresh the list
       }
@@ -123,12 +125,23 @@ const TrashRequestForm = ({ onSuccess }) => {
         </form>
       </div>
 
-      {isDialogOpen && (
-        <ConfirmationDialog
-          onClose={() => setIsDialogOpen(false)}
-          onConfirm={confirmSubmit}
-        />
-      )}
+      <Dialog
+        isOpen={isDialogOpen}
+        onClose={() => setIsDialogOpen(false)}
+        onConfirm={confirmSubmit}
+        title="Confirm Request"
+        message="Are you sure you want to submit this trash pickup request?"
+        type="confirm"
+      />
+
+      <Dialog
+        isOpen={showSuccessDialog}
+        onClose={() => setShowSuccessDialog(false)}
+        title="Request Submitted"
+        message="Your trash pickup request has been successfully submitted!"
+        type="success"
+        confirmText="OK"
+      />
     </>
   );
 };
