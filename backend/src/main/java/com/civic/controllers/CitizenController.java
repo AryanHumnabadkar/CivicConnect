@@ -35,6 +35,11 @@ public class CitizenController {
 		return ResponseEntity.ok(citizenService.getProfileDetails(userId));
 	}
 	
+	@GetMapping("/sectors")
+	public ResponseEntity<?> getSectors(){
+		return ResponseEntity.ok(citizenService.getSectors());
+	}
+	
 	@PutMapping("/profile/{userId}")
 	public ResponseEntity<?> updateProfile(@Valid @RequestBody UpdateUserDTO userDetails, @PathVariable long userId){
 		String msg = citizenService.updateProfile(userId, userDetails); //also send token to extract id, instead of directly id
