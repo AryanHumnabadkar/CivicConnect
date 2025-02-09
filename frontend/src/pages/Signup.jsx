@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Signup = () => {
-  const [role, setRole] = useState("CITIZEN");
+  const [role, setRole] = useState("ROLE_CITIZEN");
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -30,7 +30,7 @@ const Signup = () => {
       );
 
       if (response.status === 200) {
-        navigate("/login");
+        navigate("/signin");
       }
     } catch (error) {
       setError(
@@ -61,7 +61,7 @@ const Signup = () => {
                   type="radio"
                   className="form-radio text-[#4A8DAB]"
                   value="CITIZEN"
-                  checked={role === "CITIZEN"}
+                  checked={role === "ROLE_CITIZEN"}
                   onChange={(e) => setRole(e.target.value)}
                 />
                 <span className="ml-2 text-[#4A8DAB]">Citizen</span>
@@ -71,7 +71,7 @@ const Signup = () => {
                   type="radio"
                   className="form-radio text-[#4A8DAB]"
                   value="ADMIN"
-                  checked={role === "ADMIN"}
+                  checked={role === "ROLE_ADMIN"}
                   onChange={(e) => setRole(e.target.value)}
                 />
                 <span className="ml-2 text-[#4A8DAB]">Admin</span>
