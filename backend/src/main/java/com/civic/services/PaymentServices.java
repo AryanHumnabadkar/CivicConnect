@@ -16,13 +16,15 @@ import jakarta.transaction.Transactional;
 public class PaymentServices {
 	
 	@Value("${razorpay.key_id}")
-	private String key;
+	private String key ;
 	
 	@Value("${razorpay.key_secret}")
-	private String secret;
+	private String secret ;
 	
 	
-	public String createOrder(Integer amount) throws RazorpayException {
+	public String createOrder(int amount) throws RazorpayException {
+		
+		System.out.println("inisde payment service");
 		
 		RazorpayClient razorpayclnt = new RazorpayClient(key, secret);
 		
@@ -30,8 +32,10 @@ public class PaymentServices {
 				.put("amount", (amount*100))
 				.put("currency", "INR")
 				.put("receipt", "txn_" + System.currentTimeMillis());;
+				
+				System.out.println(order_request);
 		
-		String order = razorpayclnt.orders.create(order_request).toString();
+		String order = (razorpayclnt.orders.create(order_request)).toString();
 		
 		/*
 		 * Here Order object contains following fields : 

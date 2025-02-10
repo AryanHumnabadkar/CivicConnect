@@ -44,8 +44,10 @@ public class Event extends BaseEntity {
 	@ManyToOne
 	private Sector sector;
 	
+	private PermitStatus status;
+	
 	@OneToOne
-	private Permit permit;
+	private Receipt receipt;
 	
 
 }
