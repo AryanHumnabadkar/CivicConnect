@@ -1,6 +1,6 @@
-import { EventsList } from "../components/EventsList";
 import { useNavigate } from "react-router-dom";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/Navbar";
+import EventsList from "../components/EventsList";
 
 export const UserDashBoard = () => {
   const navigate = useNavigate();

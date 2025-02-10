@@ -40,7 +40,7 @@ public class SecurityConfig {
 		.csrf(csrf -> csrf.disable())	
 		.exceptionHandling(excep -> excep.authenticationEntryPoint(authEntry))
 		.authorizeHttpRequests(
-				auth -> auth.requestMatchers("/api/view","/api/auth/**","/api/requests/**","/api/events/**",
+				auth -> auth.requestMatchers("/api/view","/api/auth/**","/api/requests/**","/api/events/**", "api/events/**",
 						"/v*/api-doc*/**","/swagger-ui/**","/payments/**").permitAll()
 						.requestMatchers(HttpMethod.OPTIONS).permitAll()
 						.requestMatchers("/api/admin/**").hasRole("ADMIN")

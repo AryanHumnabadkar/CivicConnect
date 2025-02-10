@@ -10,22 +10,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Entity
 @NoArgsConstructor
 @Getter
 @Setter
 @ToString
-@EqualsAndHashCode
 public class Receipt extends BaseEntity {
-	
+
 	@Temporal(TemporalType.DATE)
 	private LocalDate receipt_date;
-	
+
 	private String razorpay_payment_id;
-	
+
 	private String razorpay_order_id;
-	
-	
 
 }

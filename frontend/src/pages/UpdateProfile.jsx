@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { User, Mail, MapPin } from "lucide-react";
-import NavBar from "../components/NavBar";
 import Dialog from "../components/Dailog";
+import NavBar from "../components/Navbar";
 
 export const UpdateProfile = () => {
   const navigate = useNavigate();

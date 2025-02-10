@@ -15,7 +15,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Entity
 @NoArgsConstructor
 @Getter
@@ -24,7 +23,7 @@ import lombok.ToString;
 @EqualsAndHashCode
 @Table(name = "sector")
 public class Sector extends BaseEntity {
-	
+
 	@Column(name = "sector_name")
 	private SectorValues sectorName;
 

@@ -4,6 +4,8 @@ import java.time.LocalDate;
 import java.time.LocalTime;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -17,7 +19,6 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.ToString;
 
-
 @Entity
 @NoArgsConstructor
 @Getter
@@ -25,29 +26,30 @@ import lombok.ToString;
 @ToString
 @EqualsAndHashCode
 public class Event extends BaseEntity {
-	
+
 	private String name;
-	
+
 	private String description;
-	
+
+	@Enumerated(EnumType.STRING)
 	private EventType eventType;
-	
+
 	@Temporal(TemporalType.DATE)
 	private LocalDate date;
-	
+
 	@Temporal(TemporalType.TIME)
 	private LocalTime time;
-	
+
 	@ManyToOne
 	private User user;
-	
+
 	@ManyToOne
 	private Sector sector;
-	
+
+	@Enumerated(EnumType.STRING)
 	private PermitStatus status;
-	
+
 	@OneToOne
 	private Receipt receipt;
-	
 
 }

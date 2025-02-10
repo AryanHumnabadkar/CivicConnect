@@ -1,9 +1,9 @@
 /* eslint-disable react/prop-types */
 // src/pages/AdminDashboard.jsx
 import { useState } from "react";
-import NavBar from "../components/NavBar";
 import UserManagement from "../components/UserManagement";
 import TrashRequests from "../components/TrashRequests";
+import NavBar from "../components/Navbar";
 
 export const AdminDashBoard = () => {
   const [activeTab, setActiveTab] = useState("users");
