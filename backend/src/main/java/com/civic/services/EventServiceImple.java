@@ -44,7 +44,7 @@ public class EventServiceImple implements EventService {
 			Permit permit  = new Permit();
 			permit.setStatus(PermitStatus.PENDING);
 			Receipt receipt = new Receipt();
-			receipt.setReciptDate(LocalDate.now());
+			receipt.setReceipt_date(LocalDate.now());
 			receiptDao.save(receipt);
 			permit.setReceipt(receipt);
 			permitDao.save(permit);

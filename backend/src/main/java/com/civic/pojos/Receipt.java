@@ -20,8 +20,11 @@ import lombok.ToString;
 public class Receipt extends BaseEntity {
 	
 	@Temporal(TemporalType.DATE)
-	@Column(name = "receipt_date")
-	private LocalDate reciptDate;
+	private LocalDate receipt_date;
+	
+	private String razorpay_payment_id;
+	
+	private String razorpay_order_id;
 	
 	
 
