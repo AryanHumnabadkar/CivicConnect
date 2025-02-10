@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.civic.dto.EventPreRegisterDTO;
 import com.civic.pojos.Event;
 import com.civic.pojos.Permit;
 import com.civic.pojos.User;
@@ -31,8 +32,8 @@ public class EventController {
 	//APIs
 	
 	@PostMapping("/register/{userId}") //later get userId from body only, DTO
-	public ResponseEntity<?> registerEvent(@RequestBody Event evntDetails, @PathVariable long userId){
-		Event registedEvent = eventService.registerEvent(evntDetails, userId);
+	public ResponseEntity<?> preRegisterEvent(@RequestBody EventPreRegisterDTO evntDetails, @PathVariable long userId){
+		Event registedEvent = eventService.preRegisterEvent(evntDetails, userId);
 		return ResponseEntity.ok(registedEvent);
 	}
 	

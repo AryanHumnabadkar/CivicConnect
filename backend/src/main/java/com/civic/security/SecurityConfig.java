@@ -41,7 +41,7 @@ public class SecurityConfig {
 		.exceptionHandling(excep -> excep.authenticationEntryPoint(authEntry))
 		.authorizeHttpRequests(
 				auth -> auth.requestMatchers("/api/view","/api/auth/**","/api/requests/**","/api/events/**",
-						"/v*/api-doc*/**","/swagger-ui/**").permitAll()
+						"/v*/api-doc*/**","/swagger-ui/**","/payments/**").permitAll()
 						.requestMatchers(HttpMethod.OPTIONS).permitAll()
 						.requestMatchers("/api/admin/**").hasRole("ADMIN")
 						.requestMatchers("/api/citizen/**").hasRole("CITIZEN")

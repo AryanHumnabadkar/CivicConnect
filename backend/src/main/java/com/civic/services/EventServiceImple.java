@@ -10,6 +10,7 @@ import com.civic.dao.EventDao;
 import com.civic.dao.PermitDao;
 import com.civic.dao.ReceiptDao;
 import com.civic.dao.UserDao;
+import com.civic.dto.EventPreRegisterDTO;
 import com.civic.pojos.Event;
 import com.civic.pojos.Permit;
 import com.civic.pojos.PermitStatus;
@@ -37,18 +38,11 @@ public class EventServiceImple implements EventService {
 	private ReceiptDao receiptDao;
 
 	@Override
-	public Event registerEvent(Event eventDetails, long userId) {
+	public Event preRegisterEvent(EventPreRegisterDTO evntDetails, long userId) {
 		try {
 			//Here need to do: 1.First check if payment is done. If yes, get the Permit and set
 			//for now, create permit in PENDING status. Later do it in Permit
-			Permit permit  = new Permit();
-			permit.setStatus(PermitStatus.PENDING);
-			Receipt receipt = new Receipt();
-			receipt.setReceipt_date(LocalDate.now());
-			receiptDao.save(receipt);
-			permit.setReceipt(receipt);
-			permitDao.save(permit);
-			eventDetails.setPermit(permit);
+			
 			
 			//2.Get the User and set
 			User user = userDao.findById(userId).orElseThrow(() -> new Exception("User not found!"));
