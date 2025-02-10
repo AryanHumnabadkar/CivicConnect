@@ -38,7 +38,7 @@ const NavBar = () => {
       } catch (error) {
         console.error("Error fetching user data:", error);
         if (error.response?.status === 401) {
-          navigate("/home");
+          navigate("/");
         }
       }
     };
@@ -94,7 +94,10 @@ function DropDownMenu() {
   const navigate = useNavigate();
   return (
     <div className="absolute right-0 mt-2 w-48 bg-[#FBF8EF] rounded-lg shadow-lg py-1 z-10">
-      <button className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300">
+      <button
+        className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300"
+        onClick={() => navigate("/updateProfile")}
+      >
         <Settings className="w-4 h-4 mr-2" />
         Profile Settings
       </button>
@@ -109,11 +112,16 @@ function DropDownMenu() {
         className="flex items-center px-4 py-3 text-sm text-[#4A8DAB] hover:bg-[#78B3CE] hover:text-[#FBF8EF] w-full transition-colors duration-300"
         onClick={() => {
           axios
-            .post(`http://localhost:8080/api/auth/logout`, {
-              headers: {
-                Authorization: "Bearer " + localStorage.getItem("token"),
-              },
-            })
+            .post(
+              `http://localhost:8080/api/auth/logout/${localStorage.getItem(
+                "userId"
+              )}`,
+              {
+                headers: {
+                  Authorization: "Bearer " + localStorage.getItem("token"),
+                },
+              }
+            )
             .then((response) => {
               console.log("Logout successful:", response.data);
               localStorage.removeItem("token");
