@@ -9,7 +9,7 @@ const TrashReqCard = ({ request }) => {
           {request.description}
         </p>
         <span className="text-sm text-[#F96E2A] px-2 py-1 bg-[#F96E2A]/10 rounded">
-          {request.status || "PENDING"}
+          {request.serviceDate ? "APPROVED" : "PENDING"}
         </span>
       </div>
 

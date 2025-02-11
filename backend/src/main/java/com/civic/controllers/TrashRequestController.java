@@ -1,8 +1,10 @@
 package com.civic.controllers;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.civic.dto.CreateTrashReqDTO;
 import com.civic.dto.TrashReqDTO;
+import com.civic.dto.UpdateTrashReqDTO;
 import com.civic.pojos.TrashRequest;
 import com.civic.services.TrashRequestService;
 
@@ -25,7 +28,7 @@ import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/requests")
-@CrossOrigin
+@CrossOrigin()
 @Validated
 public class TrashRequestController {
 	
@@ -51,9 +54,9 @@ public class TrashRequestController {
     }
 
     @PutMapping("/{requestId}")
-    public ResponseEntity<TrashReqDTO> updateTrashRequest(@PathVariable Long requestId, @Valid @RequestBody CreateTrashReqDTO trashReqDetails) { //make updateTrashReq DTO
+    public ResponseEntity<TrashReqDTO> updateTrashRequest(@PathVariable Long requestId, @Valid @RequestBody UpdateTrashReqDTO serviceDate) { //make updateTrashReq DTO
     	//To update description only
-    	TrashReqDTO updatedTrashRequest = trashService.updateTrashRequest(requestId, trashReqDetails);
+    	TrashReqDTO updatedTrashRequest = trashService.updateTrashRequest(requestId, serviceDate);
         return ResponseEntity.ok(updatedTrashRequest);
     }
 

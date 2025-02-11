@@ -5,6 +5,7 @@ import {
   LogOut,
   Calendar,
   ClipboardList,
+  Home,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 import { useNavigate, Link } from "react-router-dom";
@@ -27,7 +28,7 @@ const NavBar = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:8080/api/citizen/profile/${userId}`,
+          `http://localhost:8080/api/admin/profile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -46,12 +47,27 @@ const NavBar = () => {
     fetchUserData();
   }, [navigate]);
 
+  const handleHomeClick = () => {
+    const userRole = localStorage.getItem("role");
+    navigate(userRole === "ROLE_ADMIN" ? "/admin" : "/user");
+  };
+
   return (
     <header className="bg-[#FBF8EF] shadow-lg">
       <div className="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
-        <h1 className="text-2xl font-bold text-[#4A8DAB]">
-          Welcome, {user.name?.split(" ")[0]}
-        </h1>
+        <div className="flex items-center space-x-6">
+          <button
+            onClick={handleHomeClick}
+            className="flex items-center space-x-2 text-[#4A8DAB] hover:text-[#F96E2A] transition-colors duration-300"
+          >
+            <Home className="w-5 h-5" />
+            <span>Home</span>
+          </button>
+
+          <h1 className="text-2xl font-bold text-[#4A8DAB]">
+            Welcome, {user.name?.split(" ")[0]}
+          </h1>
+        </div>
 
         <div className="flex items-center space-x-6">
           <Link
@@ -126,7 +142,7 @@ function DropDownMenu() {
               console.log("Logout successful:", response.data);
               localStorage.removeItem("token");
               localStorage.removeItem("userId");
-              navigate("/signin");
+              navigate("/");
             })
             .catch((err) => {
               console.error("Logout error:", err);

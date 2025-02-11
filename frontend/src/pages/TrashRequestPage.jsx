@@ -1,12 +1,14 @@
 import { useState, useEffect } from "react";
 import TrashRequestForm from "../components/TrashReqForm";
 import RequestList from "../components/RequestList";
+import { ClipboardList, Calendar } from "lucide-react";
 import axios from "axios";
-import NavBar from "../components/NavBar";
+import NavBar from "../components/Navbar";
 
 const TrashRequestPage = () => {
   const [requests, setRequests] = useState([]);
   const [sector, setSector] = useState();
+  const userRole = localStorage.getItem("role");
 
   const fetchRequests = async () => {
     try {
@@ -31,6 +33,38 @@ const TrashRequestPage = () => {
     fetchRequests();
   }, []);
 
+  const AdminStats = () => (
+    <div className="bg-[#FBF8EF] rounded-lg shadow-lg p-6 space-y-6">
+      <h2 className="text-2xl font-bold text-[#4A8DAB] mb-4">
+        Request Overview
+      </h2>
+      <div className="grid grid-cols-2 gap-4">
+        <div className="bg-white p-4 rounded-lg shadow">
+          <div className="flex items-center gap-3">
+            <ClipboardList className="w-8 h-8 text-[#F96E2A]" />
+            <div>
+              <p className="text-sm text-[#78B3CE]">Total Requests</p>
+              <p className="text-2xl font-bold text-[#4A8DAB]">
+                {requests.length}
+              </p>
+            </div>
+          </div>
+        </div>
+        <div className="bg-white p-4 rounded-lg shadow">
+          <div className="flex items-center gap-3">
+            <Calendar className="w-8 h-8 text-[#F96E2A]" />
+            <div>
+              <p className="text-sm text-[#78B3CE]">Pending Service</p>
+              <p className="text-2xl font-bold text-[#4A8DAB]">
+                {requests.filter((req) => !req.serviceDate).length}
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+
   return (
     <>
       <NavBar />
@@ -41,7 +75,11 @@ const TrashRequestPage = () => {
           </h1>
           <div className="grid md:grid-cols-5 p-2 md:p-0 gap-8 h-full">
             <div className="md:col-span-2 h-full">
-              <TrashRequestForm onSuccess={fetchRequests} />
+              {userRole === "ROLE_ADMIN" ? (
+                <AdminStats />
+              ) : (
+                <TrashRequestForm onSuccess={fetchRequests} />
+              )}
             </div>
             <div className="md:col-span-3 h-full">
               <RequestList requests={requests} />

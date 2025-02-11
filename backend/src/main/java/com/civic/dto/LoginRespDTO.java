@@ -17,5 +17,6 @@ public class LoginRespDTO {
 	//UserDetails and JWT token
 	private Long userId;
 	private String token;
+	private String role;
 
 }

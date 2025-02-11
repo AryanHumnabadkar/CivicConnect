@@ -4,6 +4,7 @@ import { useState } from "react";
 import UserManagement from "../components/UserManagement";
 import TrashRequests from "../components/TrashRequests";
 import NavBar from "../components/Navbar";
+import EventsList from "../components/EventsList";
 
 export const AdminDashBoard = () => {
   const [activeTab, setActiveTab] = useState("users");
@@ -35,7 +36,7 @@ export const AdminDashBoard = () => {
           </div>
 
           {activeTab === "users" && <UserManagement />}
-          {activeTab === "events" && <h1>Events</h1>}
+          {activeTab === "events" && <EventsList />}
           {activeTab === "trash" && <TrashRequests />}
         </div>
       </div>

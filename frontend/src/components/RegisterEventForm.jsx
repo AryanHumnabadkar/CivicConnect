@@ -16,7 +16,14 @@ const RegisterEventForm = ({ onSuccess }) => {
   const [loading, setLoading] = useState(false);
   const [showSuccessDialog, setShowSuccessDialog] = useState();
 
-  const eventTypes = ["FESTIVAL", "CONSERT", "SPORTS", "OTHER"];
+  const eventTypes = [
+    "FESTIVAL",
+    "CONCERT",
+    "STREET_PERFORMANCE",
+    "COMMUNITY_MEETING",
+    "SPORTS_EVENT",
+    "OTHER",
+  ];
 
   const initializeRazorpay = (orderData) => {
     const options = {

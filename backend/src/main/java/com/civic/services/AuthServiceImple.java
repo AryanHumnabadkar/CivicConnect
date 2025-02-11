@@ -66,7 +66,7 @@ public class AuthServiceImple implements AuthService {
 				.authenticate(new UsernamePasswordAuthenticationToken(email, password));
 
 		// create token
-		LoginRespDTO response = new LoginRespDTO(user.getId(), jwtUtils.generateToken(verifiedAuth));
+		LoginRespDTO response = new LoginRespDTO(user.getId(), jwtUtils.generateToken(verifiedAuth), user.getRole().name());
 		return response;
 
 	}

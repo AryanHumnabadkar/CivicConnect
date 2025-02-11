@@ -33,7 +33,7 @@ const EventsList = () => {
 
   return (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold text-white mb-6">All Events</h2>
+      <h2 className="text-2xl font-bold text-black mb-6">All Events</h2>
       {events.length === 0 ? (
         <div className="text-center text-white">No events found</div>
       ) : (

@@ -28,10 +28,13 @@ export const UpdateProfile = () => {
       try {
         const token = localStorage.getItem("token");
         const userId = localStorage.getItem("userId");
+        const role = localStorage.getItem("role");
 
         // Fetch user data
         const userResponse = await axios.get(
-          `http://localhost:8080/api/citizen/profile/${userId}`,
+          `http://localhost:8080/api/${
+            role === "ROLE_ADMIN" ? "admin" : "citizen"
+          }/profile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -41,7 +44,9 @@ export const UpdateProfile = () => {
 
         // Fetch sectors
         const sectorsResponse = await axios.get(
-          "http://localhost:8080/api/citizen/sectors",
+          `http://localhost:8080/api/${
+            role === "ROLE_ADMIN" ? "admin" : "citizen"
+          }/sectors`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
@@ -79,6 +84,7 @@ export const UpdateProfile = () => {
     try {
       const userId = localStorage.getItem("userId");
       const token = localStorage.getItem("token");
+      const role = localStorage.getItem("role");
 
       const updateData = {
         name: formData.name,
@@ -87,7 +93,9 @@ export const UpdateProfile = () => {
       };
 
       const response = await axios.put(
-        `http://localhost:8080/api/citizen/profile/${userId}`,
+        `http://localhost:8080/api/${
+          role === "ROLE_ADMIN" ? "admin" : "citizen"
+        }/profile/${userId}`,
         updateData,
         {
           headers: {

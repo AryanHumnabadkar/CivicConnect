@@ -4,9 +4,9 @@ import { ChevronLeft, ChevronRight, Trash2, Users } from "lucide-react";
 import HomeNavbar from "../components/HomeNavbar";
 
 const images = [
-  "/banner1.jpg", // Add your image paths here
-  "/banner2.jpg",
-  "/banner3.jpg",
+  "/civic1.webp", // Remove ../../public as public is the root for static files
+  "/civic2.webp",
+  "/civic3.jpg",
 ];
 
 const Homepage = () => {
@@ -24,24 +24,35 @@ const Homepage = () => {
     <div className="min-h-screen bg-[#FBF8EF]">
       <HomeNavbar />
 
-      {/* Image Carousel */}
-      <div className="relative h-[400px] bg-[#4A8DAB]">
-        <img
-          src={images[currentImage]}
-          alt="banner"
-          className="w-full h-full object-cover"
-        />
+      {/* Update carousel container and image styles */}
+      <div className="relative h-[500px] bg-[#4A8DAB] overflow-hidden">
+        <div className="absolute inset-0">
+          <img
+            src={images[currentImage]}
+            alt={`banner-${currentImage + 1}`}
+            className="w-full h-full object-cover object-center"
+            style={{
+              // maxHeight: "500px",
+              height: "100%",
+              width: "100%",
+            }}
+          />
+          {/* Add overlay for better text visibility if needed */}
+          <div className="absolute inset-0 bg-black/20"></div>
+        </div>
+
+        {/* Update button positions and styling */}
         <button
           onClick={prevImage}
-          className="absolute left-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 rounded-full hover:bg-white/75 transition-all"
+          className="absolute left-8 top-1/2 -translate-y-1/2 p-3 bg-white/50 rounded-full hover:bg-white/75 transition-all z-10"
         >
-          <ChevronLeft className="w-6 h-6" />
+          <ChevronLeft className="w-6 h-6 text-[#4A8DAB]" />
         </button>
         <button
           onClick={nextImage}
-          className="absolute right-4 top-1/2 -translate-y-1/2 p-2 bg-white/50 rounded-full hover:bg-white/75 transition-all"
+          className="absolute right-8 top-1/2 -translate-y-1/2 p-3 bg-white/50 rounded-full hover:bg-white/75 transition-all z-10"
         >
-          <ChevronRight className="w-6 h-6" />
+          <ChevronRight className="w-6 h-6 text-[#4A8DAB]" />
         </button>
       </div>
 

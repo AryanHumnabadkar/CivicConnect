@@ -60,7 +60,7 @@ const Signup = () => {
                 <input
                   type="radio"
                   className="form-radio text-[#4A8DAB]"
-                  value="CITIZEN"
+                  value="ROLE_CITIZEN"
                   checked={role === "ROLE_CITIZEN"}
                   onChange={(e) => setRole(e.target.value)}
                 />
@@ -70,7 +70,7 @@ const Signup = () => {
                 <input
                   type="radio"
                   className="form-radio text-[#4A8DAB]"
-                  value="ADMIN"
+                  value="ROLE_ADMIN"
                   checked={role === "ROLE_ADMIN"}
                   onChange={(e) => setRole(e.target.value)}
                 />

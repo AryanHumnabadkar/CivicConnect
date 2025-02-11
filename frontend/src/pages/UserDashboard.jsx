@@ -21,21 +21,12 @@ export const UserDashBoard = () => {
 
           <div className="md:col-span-3">
             <div className="bg-[#FBF8EF] rounded-lg shadow-lg p-6 transform transition-all hover:scale-102">
-              <h2 className="text-xl font-bold text-[#4A8DAB] mb-4">
-                Upcoming Events
-              </h2>
               <div className="flex justify-center space-x-4 mb-6">
                 <button
                   className="bg-[#F96E2A] text-[#FBF8EF] px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:ring-offset-2"
-                  onClick={() => navigate("/home")}
+                  onClick={() => navigate("/events")}
                 >
                   Show all events
-                </button>
-                <button
-                  className="bg-[#F96E2A] text-[#FBF8EF] px-6 py-2 rounded-lg hover:bg-opacity-90 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-[#4A8DAB] focus:ring-offset-2"
-                  onClick={() => navigate("/home")}
-                >
-                  Register an event
                 </button>
               </div>
               <EventsList />

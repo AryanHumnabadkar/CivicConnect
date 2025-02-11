@@ -14,6 +14,7 @@ import com.civic.dao.TrashRequestDao;
 import com.civic.dao.UserDao;
 import com.civic.dto.CreateTrashReqDTO;
 import com.civic.dto.TrashReqDTO;
+import com.civic.dto.UpdateTrashReqDTO;
 import com.civic.pojos.Sector;
 import com.civic.pojos.TrashRequest;
 import com.civic.pojos.User;
@@ -80,11 +81,11 @@ public class TrashRequestServiceImple implements TrashRequestService {
 	}
 
 	@Override
-	public TrashReqDTO updateTrashRequest(Long requestId, CreateTrashReqDTO trashRequestDto) {
+	public TrashReqDTO updateTrashRequest(Long requestId, UpdateTrashReqDTO serviceDate) {
 		TrashRequest existingTrashRequest = trashDao.findById(requestId)
                 .orElseThrow(() -> new RuntimeException("Trash Request not found"));
 
-        existingTrashRequest.setDescription(trashRequestDto.getDescription());
+        existingTrashRequest.setServiceDate(serviceDate.getServiceDate());
 
         TrashRequest updatedTrashRequest = trashDao.save(existingTrashRequest);
         

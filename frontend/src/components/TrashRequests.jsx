@@ -44,7 +44,7 @@ const TrashRequests = () => {
     try {
       const token = localStorage.getItem("token");
       await axios.put(
-        `http://localhost:8080/api/requests/${requestId}/service-date`,
+        `http://localhost:8080/api/requests/${requestId}`,
         { serviceDate: pendingDates[requestId] },
         { headers: { Authorization: `Bearer ${token}` } }
       );

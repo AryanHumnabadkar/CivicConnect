@@ -28,10 +28,18 @@ function Signin() {
           },
         }
       );
-      console.log("Login successful:", response.data);
+
+      // Store user data in localStorage
       localStorage.setItem("userId", response.data.userId);
       localStorage.setItem("token", response.data.token);
-      navigate("/user");
+      localStorage.setItem("role", response.data.role); // Store role for future use
+
+      // Redirect based on role
+      if (response.data.role === "ROLE_ADMIN") {
+        navigate("/admin");
+      } else {
+        navigate("/user");
+      }
     } catch (err) {
       setError("Invalid email or password. Please try again.");
       console.error("Login error:", err);
