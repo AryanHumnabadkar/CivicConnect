@@ -1,6 +1,7 @@
 import { useNavigate } from "react-router-dom";
 import NavBar from "../components/Navbar";
 import EventsList from "../components/EventsList";
+import Newsletter from "../components/Newsletter";
 
 export const UserDashBoard = () => {
   const navigate = useNavigate();
@@ -12,9 +13,10 @@ export const UserDashBoard = () => {
         <div className="grid grid-cols-1 md:grid-cols-5 gap-6">
           <div className="md:col-span-2">
             <div className="bg-[#FBF8EF] rounded-lg shadow-lg p-6 transform transition-all hover:scale-102">
-              <h2 className="text-xl font-bold text-[#4A8DAB] mb-4">
+              {/* <h2 className="text-xl font-bold text-[#4A8DAB] mb-4">
                 Newsletters
-              </h2>
+              </h2> */}
+              <Newsletter />
               {/* Newsletter content here */}
             </div>
           </div>

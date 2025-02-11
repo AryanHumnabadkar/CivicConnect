@@ -57,7 +57,6 @@ public class PaymentServices {
 			  "created_at": 1572502745
 			}
 			
-			out of this need to validate status to created using if-else..
 		 */
 		
 		return order;
