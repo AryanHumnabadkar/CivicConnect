@@ -88,6 +88,15 @@ function Signin() {
               placeholder="Enter your password"
               required
             />
+            <div className="flex justify-end mt-1">
+              <button
+                type="button"
+                onClick={() => navigate("/forgot-password")}
+                className="text-sm text-[#4A8DAB] hover:text-[#F96E2A]"
+              >
+                Forgot Password?
+              </button>
+            </div>
           </div>
           {error && <p className="text-red-500 text-sm mb-4">{error}</p>}
           <div className="flex justify-center">

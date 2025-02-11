@@ -9,6 +9,7 @@ import { AdminDashBoard } from "./pages/AdminDashboard";
 import { UpdateProfile } from "./pages/UpdateProfile";
 import TrashRequestPage from "./pages/TrashRequestPage";
 import EventsPage from "./pages/EventsPage";
+import ForgotPassword from "./components/ForgotPassword";
 function App() {
   return (
     <div>
@@ -22,6 +23,7 @@ function App() {
           <Route path="/updateProfile" element={<UpdateProfile />} />
           <Route path="/trash" element={<TrashRequestPage />} />
           <Route path="events" element={<EventsPage />} />
+          <Route path="/forgot-password" element={<ForgotPassword />} />
         </Routes>
       </BrowserRouter>
     </div>
