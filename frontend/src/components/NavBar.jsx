@@ -21,6 +21,7 @@ const NavBar = () => {
       try {
         const userId = localStorage.getItem("userId");
         const token = localStorage.getItem("token");
+        const role = localStorage.getItem("role");
 
         if (!userId || !token) {
           navigate("/signin");
@@ -28,7 +29,9 @@ const NavBar = () => {
         }
 
         const response = await axios.get(
-          `http://localhost:8080/api/admin/profile/${userId}`,
+          `http://localhost:8080/api/${
+            role === "ROLE_ADMIN" ? "admin" : "citizen"
+          }/profile/${userId}`,
           {
             headers: {
               Authorization: `Bearer ${token}`,
